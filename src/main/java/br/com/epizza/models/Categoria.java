@@ -8,6 +8,7 @@ public class Categoria {
 	@Id
 	String id;
 	String nome;
+	Cliente cliente;
 	
 	
 	public String getId() {
@@ -21,6 +22,12 @@ public class Categoria {
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	
 	
