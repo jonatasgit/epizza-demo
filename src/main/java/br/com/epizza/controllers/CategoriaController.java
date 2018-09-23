@@ -24,7 +24,12 @@ public class CategoriaController {
 	private ClienteRepository clienteRepo;
 	
 	@RequestMapping("/novaCategoria")
-	public String novaCategoria(Model model) {
+	public String novaCategoria(Model model, HttpSession session) {
+		Cliente clienteLogado = (Cliente) session.getAttribute("cliente");
+		if(clienteLogado == null) {
+			return "redirect:/login";
+		}
+		
 		return "novaCategoria";
 	}
 	
@@ -44,6 +49,9 @@ public class CategoriaController {
 	@RequestMapping(value="/categorias", method=RequestMethod.GET)
 	public String buscarTodasCategorias(Model model, HttpSession session) {
 		Cliente clienteLogado = (Cliente) session.getAttribute("cliente");
+		if(clienteLogado == null) {
+			return "redirect:/login";
+		}
 		model.addAttribute("categorias", categoriaRepo.findAllBycliente(clienteLogado));
 		//Retorna html do produto
 		return "categorias";

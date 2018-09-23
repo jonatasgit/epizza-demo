@@ -2,7 +2,7 @@
 <html lang="pt"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="/default">
+      layout:decorator="/defaultAutenticar">
     <head>
     	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Login</title>
@@ -10,23 +10,35 @@
     <body>
     <div class="container-fluid center">
         <div layout:fragment="content" class="row">
-            <div class="col col-lg-6 center">               
-                <h2>Fazer Login</h2>               
-                
-                <form action="/autenticar">
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="text" class="form-control" name="email" />
-                    </div>                    
-                    <div class="form-group">
-                        <label for="senha">Senha</label>
-                        <input type="password" class="form-control" name="senha" />
-                    </div>
-                     <h4 class="text-danger"th:text="${erro}"></h4>
-                   <a href="/novoCliente" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Novo Cliente</a>
-                    <button type="submit" class="btn btn-success">Entrar</button>
-                </form>
-            </div>
+                       
+                               
+                 <div class="row">
+				    <form class="col s12 m6 offset-m3 l4 offset-l4 center" action="/autenticar">
+				      <h4>Fazer Login</h4>
+				      <div class="row">
+				        <div class="row">
+					        <div class="input-field col s12">
+					          <i class="material-icons prefix">account_circle</i>
+					          <input id="email" type="email" class="validate" name="email">
+					          <label for="email">Email</label>
+					          <span class="helper-text" data-error="wrong" data-success="right"></span>
+					        </div>
+				      	</div>
+				        <div class="row">
+					        <div class="input-field col s12">
+					          <i class="material-icons prefix">vpn_key</i>
+					          <input id="email" type="password" class="validate" name="senha">
+					          <label for="email">Senha</label>
+					          
+					        </div>
+				      	</div>
+				      </div>
+				      <h4 class="text-danger"th:text="${erro}"></h4>
+                  	  <a href="/novoCliente" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Novo Cliente</a>
+                      <button type="submit" class="btn btn-success">Entrar</button>
+				    </form>
+				  </div>
+              
         </div>
     </div>    
     </body>

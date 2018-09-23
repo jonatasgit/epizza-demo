@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>ePizza</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       	<!-- Materialize CSS -->
+       	<link href="materialize/materialize.min.css" rel="stylesheet">
+		<!--Import Google Icon Font-->
+    	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	       
+    </head>
+    <body>     
+        <div class="container-fluid">        
+			<nav>
+			    <div class="nav-wrapper">
+			      <a href="#!" class="brand-logo">easyPizza</a>			     
+			      <ul class="right hide-on-med-and-down">			        			      
+			      </ul>
+			    </div>
+			  </nav>						
+            <div class="starter-template" layout:fragment="content"></div>
+        </div><!-- /.container -->
+
+      	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<!-- Compiled and minified JavaScript -->
+	    <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" src="materialize/materialize.min.js"></script>
+	    <script>
+	    $('.dropdown-trigger').dropdown();
+	    $(document).ready(function(){
+	    	    $('.sidenav').sidenav();
+	   	});
+	    </script>     
+    </body>
+</html>

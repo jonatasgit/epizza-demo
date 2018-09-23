@@ -1,24 +1,41 @@
 <!DOCTYPE HTML>
-<html lang="en"
+<html lang="pt"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="default">
-    <head>
-    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Show Product</title>
+    <head>    	
+    	 <meta charset="UTF-8"/>
+        <title th:text="${produto.nome}"></title>
     </head>
     <body>
         <div layout:fragment="content" class="row">
-            <div class="col-xs-8 col-md-8">             
-                <h2 th:text="${produto.nome}"></h2>                
-                <dl class="list">
-                    <dt>Product Description</dt>
-                    <dd th:text="${produto.descricao}"></dd>
-                    <dt>Product Description</dt>
-                    <dd th:text="${produto.preco}"></dd>
-                </dl>
+        	
+            <div class="row col s12 m8 offset-m2 l6 offset-l3 center">             
+                <h4 class="row center" th:text="${produto.nome}"></h4>   
+                <table>
+			        <thead>
+			          <tr>
+			              <th>Descrição</th>
+			              <th>Preço</th>
+			              <th>Produto disponível?</th>
+			              <th>Categoria</th>
+			          </tr>
+			        </thead>
+			
+			        <tbody>
+			          <tr>
+			            <td th:text="${produto.descricao}"></td>
+			            <td th:text="${produto.preco}"></td>
+			            <td th:text="${produto.disponivel}"></td>
+			            <td th:text="${produto.categoria.nome}"></td>
+			          </tr>			         
+			        </tbody>
+			      </table>             
+                
                
             </div>
+            
+        	
         </div>
     </body>
 </html>

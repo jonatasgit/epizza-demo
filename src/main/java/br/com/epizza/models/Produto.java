@@ -10,9 +10,10 @@ public class Produto {
 	String id;
 	String nome;
 	String descricao;
-	String preco;
+	Double preco;
 	Boolean disponivel;
 	Categoria categoria;
+	Cliente cliente;
 	
 	
 	public String getId() {
@@ -34,10 +35,10 @@ public class Produto {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public String getPreco() {
+	public Double getPreco() {
 		return preco;
 	}
-	public void setPreco(String preco) {
+	public void setPreco(Double preco) {
 		this.preco = preco;
 	}	
 	public Boolean getDisponivel() {
@@ -51,6 +52,12 @@ public class Produto {
 	}
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	
 	

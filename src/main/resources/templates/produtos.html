@@ -10,29 +10,29 @@
     <body>
     <div class="container-fluid">
         <div layout:fragment="content" class="row">
-            <div class="col-12">
-                <h2>Lista de Produtos</h2>
-                <div class="table-responsive">
-                    <table class="table" id="product-table">
+            <!-- LISTA DE PRODUTOS -->  
+			  
+			  <h4 class="row center">Lista de Produtos</h4>
+                <div class="row">
+                    <table class="responsive-table" id="product-table">
                         <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>Preço</th>
-                                <th>Desconto</th>
-                                <th>Categoria</th>
+                                <th>Preço</th>   
+                                <th>Disponível</th>                            
+                                <th>Categoria</th>                               
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="produto : ${produtos}">
-                                <td><a th:text="${produto.nome}" ></a></td>
-                                <td><a th:text="${produto.preco}" ></a></td>
-                                <td><a th:text="${produto.desconto}" ></a></td>
-                                <td><a th:text="${produto.categoria.nome}" ></a></td>
+                                <td th:text="${produto.nome}"></td>
+                                <td th:text="${produto.preco}" ></td>
+                                <td th:text="${produto.preco}"></td>                               
+                                <td th:text="${produto.categoria.nome}"></td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
+                </div>   
         </div>
     </div>    
     </body>
