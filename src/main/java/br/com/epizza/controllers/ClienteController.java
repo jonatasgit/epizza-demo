@@ -25,7 +25,7 @@ public class ClienteController {
 	
 	@RequestMapping(value="/novoCliente", method=RequestMethod.GET)
 	public String novoCliente(Model model) {		
-		return "cliente/novoCliente";
+		return "novoCliente";
 	}
 	
 	@RequestMapping(value="/salvarCliente", method=RequestMethod.GET)
