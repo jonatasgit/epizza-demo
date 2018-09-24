@@ -20,7 +20,7 @@ public class ClienteController {
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(Model model) {				
-		return "cliente/login";
+		return "login";
 	}
 	
 	@RequestMapping(value="/novoCliente", method=RequestMethod.GET)
@@ -54,7 +54,7 @@ public class ClienteController {
 		
 		if(clienteLogin == null) {
 			model.addAttribute("erro", "Login ou senha inválidos.");
-			return "cliente/login";
+			return "login";
 		} else {
 			session.setAttribute("emailcliente", clienteLogin.getEmail());
 			session.setAttribute("idcliente", clienteLogin.getId());
