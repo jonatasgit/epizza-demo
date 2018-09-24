@@ -10,23 +10,22 @@
     <body>
     <div class="container-fluid">
         <div layout:fragment="content" class="row">
-            <div class="col-12">
-                <h2>Lista de Categorias</h2>
-                <div class="table-responsive">
-                    <table class="table" id="product-table">
+        <!-- LISTA DE PRODUTOS -->  			  
+			  <h4 class="row center">Lista de Categorias</h4>
+                <div class="row">
+                    <table class="responsive-table" id="product-table">
                         <thead>
                             <tr>
-                                <th>Nome</th>                                
+                                <th>Nome</th>                                                       
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="categoria : ${categorias}">
-                                <td><a th:text="${categoria.nome}" ></a></td>                                
+                                <td th:text="${categoria.nome}"></td>                                
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
+                </div>                              
         </div>
     </div>    
     </body>

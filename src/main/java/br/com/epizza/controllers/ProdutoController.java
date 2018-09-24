@@ -31,7 +31,7 @@ public class ProdutoController {
 		if(clienteLogado == null) {
 			return "redirect:/login";
 		}
-		model.addAttribute("produtos", produtoRepository.findAll());
+		model.addAttribute("produtos", produtoRepository.findAllBycliente(clienteLogado));
 		//Retorna html do produto
 		return "produtos";
 	}
@@ -43,7 +43,7 @@ public class ProdutoController {
 			return "redirect:/login";
 		}
 		model.addAttribute("categorias", categoriaRepo.findAllBycliente(clienteLogado));
-		model.addAttribute("produtos", produtoRepository.findAll());
+		model.addAttribute("produtos", produtoRepository.findAllBycliente(clienteLogado));
 		
 		return "novoProduto";
 	}
@@ -66,13 +66,20 @@ public class ProdutoController {
 		novoProduto.setCliente(clienteLogado);
 		produtoRepository.save(novoProduto);
 		
-		model.addAttribute("produtos", produtoRepository.findAll());
+		model.addAttribute("produtos", produtoRepository.findAllBycliente(clienteLogado));
 		
 		return "redirect:/novoProduto";
 	}
 	
+	
+	
 	@RequestMapping(value="/mostrarProduto-{id}")
-	public String mostrarProduto(@PathVariable String id, Model model) {
+	public String mostrarProduto(@PathVariable String id, Model model, HttpSession session) {
+		Cliente clienteLogado = (Cliente) session.getAttribute("cliente");
+		if(clienteLogado == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("categorias", categoriaRepo.findAllBycliente(clienteLogado));
 		
 		Produto prod = new Produto();
 		prod = produtoRepository.findOneByid(id);
@@ -80,5 +87,29 @@ public class ProdutoController {
 		model.addAttribute("produto", produtoRepository.findOneByid(id));
 		
 		return "mostrarProduto";
+	}
+	
+	@RequestMapping(value="/atualizarProduto", method=RequestMethod.GET)
+	public String atualizarProduto(@RequestParam String id, 
+								@RequestParam String nome, 
+								@RequestParam String descricao,
+								@RequestParam Double preco,
+								@RequestParam Boolean disponivel,
+								@RequestParam Categoria categoria,
+								Model model,
+								HttpSession session) {
+		Cliente clienteLogado = (Cliente) session.getAttribute("cliente");
+		Produto produtoExistente = produtoRepository.findOneByid(id);
+		produtoExistente.setNome(nome);
+		produtoExistente.setDescricao(descricao);
+		produtoExistente.setPreco(preco);
+		produtoExistente.setDisponivel(disponivel);
+		produtoExistente.setCategoria(categoria);
+		produtoExistente.setCliente(clienteLogado);
+		produtoRepository.save(produtoExistente);
+		
+		model.addAttribute("produtos", produtoRepository.findAllBycliente(clienteLogado));
+		
+		return "redirect:/novoProduto";
 	}
 }

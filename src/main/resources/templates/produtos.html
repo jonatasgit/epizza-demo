@@ -10,8 +10,7 @@
     <body>
     <div class="container-fluid">
         <div layout:fragment="content" class="row">
-            <!-- LISTA DE PRODUTOS -->  
-			  
+            <!-- LISTA DE PRODUTOS -->  			  
 			  <h4 class="row center">Lista de Produtos</h4>
                 <div class="row">
                     <table class="responsive-table" id="product-table">
@@ -20,19 +19,21 @@
                                 <th>Nome</th>
                                 <th>Preço</th>   
                                 <th>Disponível</th>                            
-                                <th>Categoria</th>                               
+                                <th>Categoria</th> 
+                                <th>Editar</th>                              
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="produto : ${produtos}">
                                 <td th:text="${produto.nome}"></td>
                                 <td th:text="${produto.preco}" ></td>
-                                <td th:text="${produto.preco}"></td>                               
+                                <td th:text="${produto.disponivel}"></td>                               
                                 <td th:text="${produto.categoria.nome}"></td>
+                                <td><a th:href="@{'/mostrarProduto-' + ${produto.id}}"><i class="material-icons">edit</i></a></td>
                             </tr>
                         </tbody>
                     </table>
-                </div>   
+                </div> 
         </div>
     </div>    
     </body>

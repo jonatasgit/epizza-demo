@@ -36,7 +36,7 @@
 					    <label>
 					      Não
 					      <input id="disponivelN" type="hidden" name="disponivel" th:value="false"/>
-					      <input id="disponivelS" type="checkbox" name="disponivel" th:value="true">
+					      <input id="disponivelS" checked="checked" type="checkbox" name="disponivel" th:value="true">
 					      <span class="lever"></span>
 					      Sim
 					    </label>
@@ -65,7 +65,8 @@
                                 <th>Nome</th>
                                 <th>Preço</th>   
                                 <th>Disponível</th>                            
-                                <th>Categoria</th>                               
+                                <th>Categoria</th> 
+                                <th>Editar</th>                              
                             </tr>
                         </thead>
                         <tbody>
@@ -74,6 +75,7 @@
                                 <td th:text="${produto.preco}" ></td>
                                 <td th:text="${produto.disponivel}"></td>                               
                                 <td th:text="${produto.categoria.nome}"></td>
+                                <td><a th:href="@{'/mostrarProduto-' + ${produto.id}}"><i class="material-icons">edit</i></a></td>
                             </tr>
                         </tbody>
                     </table>

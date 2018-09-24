@@ -8,34 +8,50 @@
         <title th:text="${produto.nome}"></title>
     </head>
     <body>
-        <div layout:fragment="content" class="row">
-        	
-            <div class="row col s12 m8 offset-m2 l6 offset-l3 center">             
-                <h4 class="row center" th:text="${produto.nome}"></h4>   
-                <table>
-			        <thead>
-			          <tr>
-			              <th>Descrição</th>
-			              <th>Preço</th>
-			              <th>Produto disponível?</th>
-			              <th>Categoria</th>
-			          </tr>
-			        </thead>
-			
-			        <tbody>
-			          <tr>
-			            <td th:text="${produto.descricao}"></td>
-			            <td th:text="${produto.preco}"></td>
-			            <td th:text="${produto.disponivel}"></td>
-			            <td th:text="${produto.categoria.nome}"></td>
-			          </tr>			         
-			        </tbody>
-			      </table>             
-                
-               
-            </div>
-            
-        	
+        <div layout:fragment="content" class="row">        	
+        	<h4 class="row center">Editar Produto</h4>
+        	<div class="row">
+			    <form action="/atualizarProduto">
+			    <input type="hidden" name="id" th:value="${produto.id}"/>
+			      <div class="row col s12 m12 l12">
+			        <div class="input-field col s12 m6 l2">
+			          <i class="material-icons prefix">shopping_basket</i>
+			          <input id="icon_prefix" type="text" name="nome" required="true" th:value="${produto.nome}">
+			          <label for="icon_prefix">Nome</label>
+			        </div>
+			        <div class="input-field col s12 m6 l3">
+			          <i class="material-icons prefix">format_align_center</i>
+			          <textarea id="textarea1" class="materialize-textarea" name="descricao" required="true" th:text="${produto.descricao}"></textarea>
+          			  <label for="textarea1">Descrição</label>
+			        </div>
+			        <div class="input-field col s12 m6 l2">
+			          <i class="material-icons prefix">attach_money</i>
+			          <input id="icon_prefix" type="number" step="0.01" class="validate" name="preco" required="true" th:value="${produto.preco}"> 
+			          <label for="icon_prefix">Preço</label>
+			        </div>			        
+			        <div class="switch col s12 m6 l2">
+			        <label for="icon_prefix">Produto Disponível?</label><br>
+					    <label>
+					      Não
+					      <input id="disponivelN" type="hidden" name="disponivel" th:value="false"/>
+					      <input id="disponivelS" checked="checked" type="checkbox" name="disponivel" th:value="true">
+					      <span class="lever"></span>
+					      Sim
+					    </label>
+					 </div>
+					 <div class="input-field col s12 m12 l3">
+					    <select required name="categoria">					    	
+					      <option value="" disabled selected>Selecione uma Categoria</option>
+					      <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nome}" ></option>					     <
+					    </select>
+					    <label>Categoria</label>
+					  </div>										
+			      </div>
+			      <div class="row center">
+			     	 <button type="submit" onclick="validaCheckbox(); M.toast({html: 'Preencha todos os Campos!', classes: 'rounded'})" class="btn btn-success">Atualizar</button>
+			      </div>
+			    </form>
+			  </div>                      
         </div>
     </body>
 </html>
