@@ -41,7 +41,7 @@
 					 </div>
 					 <div class="input-field col s12 m12 l3">
 					    <select required name="categoria">					    	
-					      <option value="" disabled selected>Selecione uma Categoria</option>
+					      <option th:value="${produto.categoria.id}" th:text="${produto.categoria.nome}"  selected>Selecione uma Categoria</option>
 					      <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nome}" ></option>					     <
 					    </select>
 					    <label>Categoria</label>

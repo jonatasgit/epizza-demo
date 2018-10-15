@@ -1,5 +1,7 @@
 package br.com.epizza.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,10 +81,21 @@ public class ProdutoController {
 		if(clienteLogado == null) {
 			return "redirect:/login";
 		}
-		model.addAttribute("categorias", categoriaRepo.findAllBycliente(clienteLogado));
-		
+		List<Categoria> categoriasCliente = categoriaRepo.findAllBycliente(clienteLogado);
 		Produto prod = new Produto();
 		prod = produtoRepository.findOneByid(id);
+		
+		//categoriasCliente.remove(prod.getCategoria());
+		
+		for(int i =0; i < categoriasCliente.size(); i++){
+		    if(categoriasCliente.get(i).getId().equals(prod.getCategoria().getId())){
+		       categoriasCliente.remove(i);
+		    }
+		}
+		
+		model.addAttribute("categorias", categoriasCliente);
+		
+		
 		
 		model.addAttribute("produto", produtoRepository.findOneByid(id));
 		
