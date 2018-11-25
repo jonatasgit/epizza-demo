@@ -4,17 +4,15 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-public class Cardapio {
-	@JsonIgnore
+public class Pedido {
+	
 	@Id
 	private String id;
 	private List<Produto> produtos;
-	private List<Categoria> categorias;
-	private String mesa;
 	private Cliente cliente;
-	
+	private String mesa;
+	private String apelido;
+	private String status;
 	
 	public String getId() {
 		return id;
@@ -28,11 +26,11 @@ public class Cardapio {
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
-	public List<Categoria> getCategorias() {
-		return categorias;
+	public Cliente getCliente() {
+		return cliente;
 	}
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	public String getMesa() {
 		return mesa;
@@ -40,13 +38,18 @@ public class Cardapio {
 	public void setMesa(String mesa) {
 		this.mesa = mesa;
 	}
-	public Cliente getCliente() {
-		return cliente;
+	public String getApelido() {
+		return apelido;
 	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setApelido(String apelido) {
+		this.apelido = apelido;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	
-	
-}	
+}

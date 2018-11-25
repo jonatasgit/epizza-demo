@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="default">
+    <head>
+        <title>Lista de Pedidos</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+    <div class="container-fluid">
+        <div layout:fragment="content" class="row">
+        <div class="row">		   
+		    <div class="col s6 m6 l6">
+		    	<h4 class="row center">Pedidos Recebidos</h4>
+		    	<ul class="collapsible center">
+				    <li th:each="pedido : ${pedidosEnviados}" th:id="${pedido.id}">
+					      <div class="collapsible-header">
+					      		
+		                            
+		                            Mesa: &nbsp;<b th:text="${pedido.mesa}"></b>&nbsp;		                            
+		                            Status:&nbsp; <b th:text="${pedido.status}"></b>&nbsp;
+		                            por&nbsp; <b th:text="${pedido.apelido}"></b>&nbsp;		                           
+		                              	                             	                   
+					      </div>					      
+					      <div class="collapsible-body" th:each="produto : ${pedido.produtos}">
+					      	
+					      	<span  th:text="${produto.nome}"></span>
+					      </div>						
+				      <a class="waves-effect waves-light btn-floating tooltipped" data-position="top" data-tooltip="Imprimir Pedido" 
+				      		th:attr="onclick=|imprimir('${pedido.id}')|" 
+				      		th:href="@{'/receberPedido-' + ${pedido.id}}">
+				      		<i class="material-icons left">print</i></a> 
+				    </li>	
+				      		   
+				  </ul>
+		    </div>
+		    <div class="col s6 m6 l6"><h4 class="row center">Pedidos Impressos</h4>
+		    <ul class="collapsible center">
+				    <li th:each="pedido : ${pedidosRecebidos}" th:id="${pedido.id}">
+					      <div class="collapsible-header">
+					      		
+		                            
+		                            Mesa: &nbsp;<b th:text="${pedido.mesa}"></b>&nbsp;		                            
+		                            Status:&nbsp; <b th:text="${pedido.status}"></b>&nbsp;
+		                            Cliente:&nbsp; <b th:text="${pedido.apelido}"></b>&nbsp;		                           
+		                              	                             	                   
+					      </div>					      
+					      <div class="collapsible-body" th:each="produto : ${pedido.produtos}">
+					      	
+					      	<span  th:text="${produto.nome}"></span>
+					      </div>										      
+				    </li>	
+				      		   
+				  </ul>
+		    </div>
+		 </div>
+		 <hr>
+		 <div class="row">
+		 	<div class="col s12 m12 l12">
+		 		<h4 class="row center">Fechamentos Recebidos</h4>
+		 		
+		 	</div>
+		 </div>
+         
+        
+         <script type="text/javascript">
+    function imprimir(id){
+	
+    var conteudo = document.getElementById(id).innerHTML,
+    tela_impressao = window.open('blank');
+	
+	tela_impressao.document.write(conteudo);
+	tela_impressao.window.print();
+	tela_impressao.window.close();
+    }
+    </script>    
+        </div>
+    </div>  
+             
+    </body>
+</html>

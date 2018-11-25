@@ -2,23 +2,26 @@ package br.com.epizza.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.HttpSession;
 
-import br.com.epizza.models.Cardapio;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import br.com.epizza.models.Categoria;
 import br.com.epizza.models.Cliente;
+import br.com.epizza.models.Pedido;
 import br.com.epizza.models.Produto;
 import br.com.epizza.repositories.CategoriaRepository;
 import br.com.epizza.repositories.ClienteRepository;
+import br.com.epizza.repositories.PedidoRepository;
 import br.com.epizza.repositories.ProdutoRepository;
 
 
 
-@RestController
+@Controller
 public class PedidoController {
 	
 	@Autowired
@@ -27,18 +30,37 @@ public class PedidoController {
 	ClienteRepository clienteRepository;
 	@Autowired
 	CategoriaRepository categoriaRepository;
+	@Autowired
+	PedidoRepository pedidoRepository;
 	
-	@CrossOrigin
-	@RequestMapping(value="/buscarCardapio")
-	public Cardapio buscarCardapio(@RequestParam("cliente") String cliente,
-									@RequestParam("mesa") String mesa) {
-		Cliente restaurante = clienteRepository.findOneByid(cliente);
-		List<Produto> produtos = produtoRepository.findAllBycliente(restaurante);
-		List<Categoria> categorias = categoriaRepository.findAllBycliente(restaurante);
-		Cardapio cardapio = new Cardapio();
-		cardapio.setCategorias(categorias);
-		cardapio.setProdutos(produtos);
+	@RequestMapping(value="/pedidos")
+	public String visualizarPedidos(Model model, HttpSession session) {
 		
-		return cardapio;
+		Cliente clienteLogado = (Cliente) session.getAttribute("cliente");
+		if(clienteLogado == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("pedidosEnviados", pedidoRepository.findAllByClienteAndStatus(clienteLogado, "Enviado"));
+		model.addAttribute("pedidosRecebidos", pedidoRepository.findAllByClienteAndStatus(clienteLogado, "Recebido"));
+		
+		return "pedidos";
+	}
+	
+	@RequestMapping(value="/receberPedido-{id}")
+	public String mostrarProduto(@PathVariable String id, Model model, HttpSession session) {
+		
+		Cliente clienteLogado = (Cliente) session.getAttribute("cliente");
+		if(clienteLogado == null) {
+			return "redirect:/login";
+		}
+		
+		Pedido pedidoRecebido = pedidoRepository.findOneByid(id);
+		pedidoRecebido.setStatus("Recebido");
+		pedidoRepository.save(pedidoRecebido);
+		
+		model.addAttribute("pedidosEnviados", pedidoRepository.findAllByClienteAndStatus(clienteLogado, "Enviado"));
+		model.addAttribute("pedidosRecebidos", pedidoRepository.findAllByClienteAndStatus(clienteLogado, "Recebido"));
+		
+		return "pedidos";
 	}
 }
