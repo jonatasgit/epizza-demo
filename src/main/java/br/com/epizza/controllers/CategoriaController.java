@@ -69,7 +69,7 @@ public class CategoriaController {
 
 		categoriaRepo.save(categoriaExistente);
 		
-		model.addAttribute("categorias", categoriaRepo.findAllByOrderByOrdemAsc(clienteLogado));
+		model.addAttribute("categorias", categoriaRepo.findAllByclienteOrderByOrdemAsc(clienteLogado));
 		
 		return "redirect:/categorias";
 	}
@@ -80,7 +80,7 @@ public class CategoriaController {
 		if(clienteLogado == null) {
 			return "redirect:/login";
 		}
-		model.addAttribute("categorias", categoriaRepo.findAllByOrderByOrdemAsc(clienteLogado));
+		model.addAttribute("categorias", categoriaRepo.findAllByclienteOrderByOrdemAsc(clienteLogado));
 		//Retorna html do produto
 		return "categorias";
 	}

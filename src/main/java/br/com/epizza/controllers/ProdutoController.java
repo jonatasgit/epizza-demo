@@ -44,7 +44,7 @@ public class ProdutoController {
 		if(clienteLogado == null) {
 			return "redirect:/login";
 		}
-		model.addAttribute("categorias", categoriaRepo.findAllByOrderByOrdemAsc(clienteLogado));
+		model.addAttribute("categorias", categoriaRepo.findAllByclienteOrderByOrdemAsc(clienteLogado));
 		model.addAttribute("produtos", produtoRepository.findAllByclienteOrderByCategoriaAsc(clienteLogado));
 		
 		return "novoProduto";
@@ -81,7 +81,7 @@ public class ProdutoController {
 		if(clienteLogado == null) {
 			return "redirect:/login";
 		}
-		List<Categoria> categoriasCliente = categoriaRepo.findAllByOrderByOrdemAsc(clienteLogado);
+		List<Categoria> categoriasCliente = categoriaRepo.findAllByclienteOrderByOrdemAsc(clienteLogado);
 		Produto prod = new Produto();
 		prod = produtoRepository.findOneByid(id);
 		
