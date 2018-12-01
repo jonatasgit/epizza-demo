@@ -1,5 +1,6 @@
 package br.com.epizza.controllers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -40,8 +41,8 @@ public class PedidoController {
 		if(clienteLogado == null) {
 			return "redirect:/login";
 		}
-		model.addAttribute("pedidosEnviados", pedidoRepository.findAllByClienteAndStatus(clienteLogado, "Enviado"));
-		model.addAttribute("pedidosRecebidos", pedidoRepository.findAllByClienteAndStatus(clienteLogado, "Recebido"));
+		model.addAttribute("pedidosEnviados", pedidoRepository.findAllByClienteAndStatusOrderByDataAsc(clienteLogado, "Enviado"));
+		model.addAttribute("pedidosRecebidos", pedidoRepository.findAllByClienteAndStatusOrderByDataAsc(clienteLogado, "Recebido"));
 		
 		return "pedidos";
 	}
@@ -56,10 +57,11 @@ public class PedidoController {
 		
 		Pedido pedidoRecebido = pedidoRepository.findOneByid(id);
 		pedidoRecebido.setStatus("Recebido");
+		pedidoRecebido.setData(LocalDateTime.now());
 		pedidoRepository.save(pedidoRecebido);
 		
-		model.addAttribute("pedidosEnviados", pedidoRepository.findAllByClienteAndStatus(clienteLogado, "Enviado"));
-		model.addAttribute("pedidosRecebidos", pedidoRepository.findAllByClienteAndStatus(clienteLogado, "Recebido"));
+		model.addAttribute("pedidosEnviados", pedidoRepository.findAllByClienteAndStatusOrderByDataAsc(clienteLogado, "Enviado"));
+		model.addAttribute("pedidosRecebidos", pedidoRepository.findAllByClienteAndStatusOrderByDataAsc(clienteLogado, "Recebido"));
 		
 		return "pedidos";
 	}

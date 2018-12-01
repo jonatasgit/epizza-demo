@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="default">
     <head>
-        <title>Lista de produtos</title>
+        <title>Lista de Categorias</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
     <body>
@@ -16,12 +16,21 @@
                     <table class="responsive-table" id="product-table">
                         <thead>
                             <tr>
-                                <th>Nome</th>                                                       
+                                <th>Nome</th>   
+                                <th>Ordem do Cardápio</th>
+                                <th>Disponível</th> 
+                                <th>Editar</th>                                                                                  
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="categoria : ${categorias}">
-                                <td th:text="${categoria.nome}"></td>                                
+                                <td th:text="${categoria.nome}"></td>  
+                                <td th:text="${categoria.ordem}"></td>
+                                <td th:switch="${categoria.disponivel}"> 
+								  <p th:case="true">Sim</p>
+								  <p th:case="false">Não</p>								  
+								</td>    
+                                <td><a th:href="@{'/mostrarCategoria-' + ${categoria.id}}"><i class="material-icons">edit</i></a></td>                                                             
                             </tr>
                         </tbody>
                     </table>

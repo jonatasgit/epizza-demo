@@ -20,12 +20,27 @@
 		                            
 		                            Mesa: &nbsp;<b th:text="${pedido.mesa}"></b>&nbsp;		                            
 		                            Status:&nbsp; <b th:text="${pedido.status}"></b>&nbsp;
-		                            por&nbsp; <b th:text="${pedido.apelido}"></b>&nbsp;		                           
+		                            por&nbsp; <b th:text="${pedido.apelido}"></b>&nbsp;	
+		                            às&nbsp; <b th:text="${#temporals.format(pedido.data, '(HH:mm) dd/MM/yyyy')}"></b>&nbsp;		                           
 		                              	                             	                   
 					      </div>					      
-					      <div class="collapsible-body" th:each="produto : ${pedido.produtos}">
-					      	
-					      	<span  th:text="${produto.nome}"></span>
+					      <div class="collapsible-body" >
+					      <div class="row" style="font-weight: bold">		   
+		    					<div class="col s4 m4 l4">Nome</div>
+		    					<div class="col s4 m4 l4">Qtde.</div>		    					
+		    					<div class="col s4 m4 l4">Observação do Cliente</div>		    					
+		    				</div>	
+					      <div th:each="produto : ${pedido.produtos}">
+					      						   
+	                        <div class="row">		   
+		    					<div class="col s4 m4 l4"><td th:text="${produto.nome}"></td>  
+		    					</div>
+		    					<div class="col s4 m4 l4"><td th:text="${produto.quantidade}"></td>
+		    					</div>
+		    					<div class="col s4 m4 l4"><td th:text="${produto.observacao}"></td>
+		    					</div>
+		    				</div>
+		    				</div>								      		
 					      </div>						
 				      <a class="waves-effect waves-light btn-floating tooltipped" data-position="top" data-tooltip="Imprimir Pedido" 
 				      		th:attr="onclick=|imprimir('${pedido.id}')|" 
@@ -41,9 +56,12 @@
 					      <div class="collapsible-header">
 					      		
 		                            
-		                            Mesa: &nbsp;<b th:text="${pedido.mesa}"></b>&nbsp;		                            
+		                            Mesa: &nbsp;<b th:text="${pedido.mesa}"></b>&nbsp;	
+		                            Cliente:&nbsp; <b th:text="${pedido.apelido}"></b>&nbsp;	                            
 		                            Status:&nbsp; <b th:text="${pedido.status}"></b>&nbsp;
-		                            Cliente:&nbsp; <b th:text="${pedido.apelido}"></b>&nbsp;		                           
+		                            às&nbsp; <b th:text="${#temporals.format(pedido.data, '(HH:mm) dd/MM/yyyy')}"></b>&nbsp;
+		                            
+		                            		                           
 		                              	                             	                   
 					      </div>					      
 					      <div class="collapsible-body" th:each="produto : ${pedido.produtos}">

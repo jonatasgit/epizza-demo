@@ -14,6 +14,8 @@ public class Produto {
 	Boolean disponivel;
 	Categoria categoria;
 	Cliente cliente;
+	Integer quantidade;
+	String observacao;
 	
 	
 	public String getId() {
@@ -58,6 +60,18 @@ public class Produto {
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+	public String getObservacao() {
+		return observacao;
+	}
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 	
 	

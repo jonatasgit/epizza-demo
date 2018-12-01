@@ -12,16 +12,31 @@
         <div layout:fragment="content" class="row">
             <h4 class="center">Nova Categoria</h4>
         	
-                <form class="col s12 m6 offset-m3 l4 offset-l4" action="/salvarCategoria"> 
+                <form class="col s12 m6 offset-m3 l6 offset-l3" action="/salvarCategoria"> 
                 <div class="row">
-	                <div class="input-field col s12 m12 l12">                  
-	                  <i class="material-icons prefix">style</i>
-			          <input id="icon_prefix" type="text"  name="nome" class="validate">
+	                <div class="input-field col s12 m6 l4">                  
+	                  <i class="material-icons prefix">label</i>
+			          <input id="icon_prefix" type="text"  name="nome" class="validate" required>
 			          <label for="icon_prefix">Nome</label>
 	                 </div> 
+	                 <div class="input-field col s12 m6 l4">                  
+		                  <i class="material-icons prefix">list</i>
+				          <input id="ordem" type="number"  name="ordem" class="validate" required>
+				          <label for="ordem">Ordem Menu</label>
+	                 </div> 
+	                 <div class="switch col s12 m6 l4">
+			      	  <label for="icon_prefix">Categoria Disponível?</label><br>
+					    <label>
+					      Não
+					      <input id="disponivelN" type="hidden" name="disponivel" th:value="false"/>
+					      <input id="disponivelS" checked="checked" type="checkbox" name="disponivel" th:value="true">
+					      <span class="lever"></span>
+					      Sim
+					    </label>
+					 </div>
 	             </div>    
 	             <div class="row center">  
-                    <button type="submit" class="btn btn-success">Salvar</button>
+                    <button type="submit" onclick="validaCheckbox();" class="btn btn-success">Salvar</button>
                  </div>   
                 </form>
           

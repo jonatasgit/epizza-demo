@@ -1,5 +1,6 @@
 package br.com.epizza.models;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -13,6 +14,7 @@ public class Pedido {
 	private String mesa;
 	private String apelido;
 	private String status;
+	private LocalDateTime data;
 	
 	public String getId() {
 		return id;
@@ -49,6 +51,12 @@ public class Pedido {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public LocalDateTime getData() {
+		return data;
+	}
+	public void setData(LocalDateTime data) {
+		this.data = data;
 	}
 	
 	

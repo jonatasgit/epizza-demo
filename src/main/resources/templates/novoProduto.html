@@ -18,21 +18,21 @@
 			      <div class="row col s12 m12 l12">
 			        <div class="input-field col s12 m6 l2">
 			          <i class="material-icons prefix">shopping_basket</i>
-			          <input id="icon_prefix" type="text" name="nome" required="true">
-			          <label for="icon_prefix">Nome</label>
+			          <input id="nome" type="text" name="nome" required="true">
+			          <label for="nome">Nome</label>
 			        </div>
 			        <div class="input-field col s12 m6 l3">
 			          <i class="material-icons prefix">format_align_center</i>
-			          <textarea id="textarea1" class="materialize-textarea" name="descricao" required="true"></textarea>
-          			  <label for="textarea1">Descrição</label>
+			          <textarea id="descricao" class="materialize-textarea" name="descricao" required="true"></textarea>
+          			  <label for="descricao">Descrição</label>
 			        </div>
 			        <div class="input-field col s12 m6 l2">
 			          <i class="material-icons prefix">attach_money</i>
-			          <input id="icon_prefix" type="number" step="0.01" class="validate" name="preco" required="true">
-			          <label for="icon_prefix">Preço</label>
+			          <input id="preco" type="number" step="0.01" class="validate" name="preco" required="true">
+			          <label for="preco">Preço</label>
 			        </div>			        
 			        <div class="switch col s12 m6 l2">
-			        <label for="icon_prefix">Produto Disponível?</label><br>
+			        <label for="disponivel">Produto Disponível?</label><br>
 					    <label>
 					      Não
 					      <input id="disponivelN" type="hidden" name="disponivel" th:value="false"/>
@@ -73,7 +73,10 @@
                             <tr th:each="produto : ${produtos}">
                                 <td th:text="${produto.nome}"></td>
                                 <td th:text="${produto.preco}" ></td>
-                                <td th:text="${produto.disponivel}"></td>                               
+                                <td th:switch="${produto.disponivel}"> 
+								  <p th:case="true">Sim</p>
+								  <p th:case="false">Não</p>								  
+								</td>                               
                                 <td th:text="${produto.categoria.nome}"></td>
                                 <td><a th:href="@{'/mostrarProduto-' + ${produto.id}}"><i class="material-icons">edit</i></a></td>
                             </tr>

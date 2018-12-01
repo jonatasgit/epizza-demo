@@ -33,7 +33,7 @@ public class ProdutoController {
 		if(clienteLogado == null) {
 			return "redirect:/login";
 		}
-		model.addAttribute("produtos", produtoRepository.findAllBycliente(clienteLogado));
+		model.addAttribute("produtos", produtoRepository.findAllByclienteOrderByCategoriaAsc(clienteLogado));
 		//Retorna html do produto
 		return "produtos";
 	}
@@ -44,8 +44,8 @@ public class ProdutoController {
 		if(clienteLogado == null) {
 			return "redirect:/login";
 		}
-		model.addAttribute("categorias", categoriaRepo.findAllBycliente(clienteLogado));
-		model.addAttribute("produtos", produtoRepository.findAllBycliente(clienteLogado));
+		model.addAttribute("categorias", categoriaRepo.findAllByOrderByOrdemAsc(clienteLogado));
+		model.addAttribute("produtos", produtoRepository.findAllByclienteOrderByCategoriaAsc(clienteLogado));
 		
 		return "novoProduto";
 	}
@@ -68,7 +68,7 @@ public class ProdutoController {
 		novoProduto.setCliente(clienteLogado);
 		produtoRepository.save(novoProduto);
 		
-		model.addAttribute("produtos", produtoRepository.findAllBycliente(clienteLogado));
+		model.addAttribute("produtos", produtoRepository.findAllByclienteOrderByCategoriaAsc(clienteLogado));
 		
 		return "redirect:/novoProduto";
 	}
@@ -81,7 +81,7 @@ public class ProdutoController {
 		if(clienteLogado == null) {
 			return "redirect:/login";
 		}
-		List<Categoria> categoriasCliente = categoriaRepo.findAllBycliente(clienteLogado);
+		List<Categoria> categoriasCliente = categoriaRepo.findAllByOrderByOrdemAsc(clienteLogado);
 		Produto prod = new Produto();
 		prod = produtoRepository.findOneByid(id);
 		
@@ -121,7 +121,7 @@ public class ProdutoController {
 		produtoExistente.setCliente(clienteLogado);
 		produtoRepository.save(produtoExistente);
 		
-		model.addAttribute("produtos", produtoRepository.findAllBycliente(clienteLogado));
+		model.addAttribute("produtos", produtoRepository.findAllByclienteOrderByCategoriaAsc(clienteLogado));
 		
 		return "redirect:/novoProduto";
 	}

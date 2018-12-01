@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang="pt"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="default">
+    <head>    	
+    	 <meta charset="UTF-8"/>
+        <title th:text="${categoria.nome}"></title>
+    </head>
+    <body>
+        <div layout:fragment="content" class="row">        	
+        	<h4 class="row center">Editar Categoria</h4>
+        	<div class="row">
+			    <form action="/atualizarCategoria">
+			      <input type="hidden" name="id" th:value="${categoria.id}"/>
+			      <div class="row col s12 m12 l12">
+			        <div class="input-field col s12 m6 l2">
+			          <i class="material-icons prefix">label</i>
+			          <input id="icon_prefix" type="text" name="nome" required="true" th:value="${categoria.nome}">
+			          <label for="icon_prefix">Nome</label>
+			        </div>
+			        <div class="input-field col s12 m6 l2">
+			          <i class="material-icons prefix">list</i>
+			          <input id="icon_prefix" type="text" name="ordem" required="true" th:value="${categoria.ordem}">
+			          <label for="icon_prefix">Ordem Menu</label>
+			        </div>
+			        <div class="switch col s12 m6 l2">
+			        <label for="icon_prefix">Categoria Disponível?</label><br>
+					    <label>
+					      Não
+					      <input id="disponivelN" type="hidden" name="disponivel" th:value="false"/>
+					      <input id="disponivelS" checked="checked" type="checkbox" name="disponivel" th:value="true">
+					      <span class="lever"></span>
+					      Sim
+					    </label>
+					 </div>										
+			      </div>
+			      <div class="row center">
+			     	 <button type="submit" onclick="validaCheckbox();" class="btn btn-success">Atualizar</button>
+			      </div>
+			    </form>
+			  </div>                      
+        </div>
+    </body>
+</html>

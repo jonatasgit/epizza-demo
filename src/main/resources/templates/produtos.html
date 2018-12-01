@@ -27,7 +27,10 @@
                             <tr th:each="produto : ${produtos}">
                                 <td th:text="${produto.nome}"></td>
                                 <td th:text="${produto.preco}" ></td>
-                                <td th:text="${produto.disponivel}"></td>                               
+                                <td th:switch="${produto.disponivel}"> 
+								  <p th:case="true">Sim</p>
+								  <p th:case="false">Não</p>								  
+								</td>                                                              
                                 <td th:text="${produto.categoria.nome}"></td>
                                 <td><a th:href="@{'/mostrarProduto-' + ${produto.id}}"><i class="material-icons">edit</i></a></td>
                             </tr>

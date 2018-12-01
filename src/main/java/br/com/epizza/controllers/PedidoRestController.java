@@ -1,5 +1,6 @@
 package br.com.epizza.controllers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class PedidoRestController {
 		
 		Cliente restaurante = clienteRepository.findOneByid(cliente);
 		List<Produto> produtos = produtoRepository.findAllByClienteAndDisponivel(restaurante, true);
-		List<Categoria> categorias = categoriaRepository.findAllBycliente(restaurante);
+		List<Categoria> categorias = categoriaRepository.findAllByClienteAndDisponivelOrderByOrdemAsc(restaurante, true);
 		
 		Cardapio cardapio = new Cardapio();
 		cardapio.setCategorias(categorias);
@@ -53,7 +54,9 @@ public class PedidoRestController {
 	@CrossOrigin
 	@RequestMapping(value="/enviarPedido", method=RequestMethod.POST)
 	public boolean enviarPedido(@RequestBody Pedido pedido) {
-	
+		
+		pedido.setData(LocalDateTime.now());
+		
 		pedidoRepository.save(pedido);
 				
 		return true;		

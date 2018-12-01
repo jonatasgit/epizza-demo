@@ -12,5 +12,7 @@ import br.com.epizza.models.Cliente;
 public interface CategoriaRepository extends CrudRepository<Categoria, String> {
 	
 	Categoria findOneByid(final String id);
-	List<Categoria> findAllBycliente(final Cliente cliente);
+	//List<Categoria> findAllBycliente(final Cliente cliente);
+	List<Categoria> findAllByOrderByOrdemAsc(final Cliente cliente);
+	List<Categoria> findAllByClienteAndDisponivelOrderByOrdemAsc(final Cliente cliente, final Boolean disponivel);
 }

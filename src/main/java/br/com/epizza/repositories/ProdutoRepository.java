@@ -12,7 +12,7 @@ import br.com.epizza.models.Produto;
 public interface ProdutoRepository extends CrudRepository<Produto, String> {
 	
 	Produto findOneByid(final String id);
-	List<Produto> findAllBycliente(final Cliente cliente);
+	List<Produto> findAllByclienteOrderByCategoriaAsc(final Cliente cliente);
 	List<Produto> findAllByClienteAndDisponivel(final Cliente cliente, final Boolean disponivel);
 	
 //
