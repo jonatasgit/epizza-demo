@@ -12,7 +12,7 @@
         <div layout:fragment="content" class="row">
             <h4 class="center">Nova Categoria</h4>
         	
-                <form class="col s12 m6 offset-m3 l6 offset-l3" action="/salvarCategoria"> 
+                <form class="col s12 m12 l8 offset-l3" action="/salvarCategoria"> 
                 <div class="row">
 	                <div class="input-field col s12 m6 l4">                  
 	                  <i class="material-icons prefix">label</i>
@@ -34,13 +34,35 @@
 					      Sim
 					    </label>
 					 </div>
-	             </div>    
+	             </div>   
+	             <div class="row">
+	             	<div class="switch col s12 m6 l4">
+			      	  <label for="icon_prefix">Categoria Permite Meio a Meio?</label><br>
+					    <label>
+					      Não
+					      <input id="2saboresN" type="hidden" name="permite2Sabores" th:value="false"/>
+					      <input id="2saboresS" type="checkbox" name="permite2Sabores" th:value="true"/>
+					      <span class="lever"></span>
+					      Sim
+					    </label>
+					 </div>
+					 <div class="switch col s12 m6 l4 tooltipped" data-position="top" data-tooltip="SE ativado o preço a ser considerado será a Média dos 2 Sabores que o cliente escolher, caso não seja selecionado, será cobrado o preço do sabor mais caro." id="divPrecoMedio" hidden>
+			      	  <label for="icon_prefix">Considerar preço médio dos sabores?</label><br>
+					    <label>
+					      Não
+					      <input id="precoMedioN" type="hidden" name="precoMedio2Sabores" th:value="false"/>
+					      <input id="precoMedioS" type="checkbox" name="precoMedio2Sabores" th:value="true"/>
+					      <span class="lever"></span>
+					      Sim
+					    </label>
+					 </div>
+	             </div> 
 	             <div class="row center">  
-                    <button type="submit" onclick="validaCheckbox();" class="btn btn-success">Salvar</button>
+                    <button type="submit" onclick="validaCheckboxCategoria();" class="btn btn-success">Salvar</button>
                  </div>   
                 </form>
           
         </div>
-    </div>    
+    </div>     
     </body>
 </html>

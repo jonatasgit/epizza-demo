@@ -73,6 +73,18 @@
 	    $(document).ready(function(){
 	        $('.tooltipped').tooltip();
 	      });
+	    
+	    /////
+	    $(document).ready(function(){
+	        $('#2saboresS').change(function(){
+	        	
+	            if(this.checked)
+	               $('#divPrecoMedio').show();
+	            else
+	                $('#divPrecoMedio').hide();
+	
+	        });
+	    });
 	    </script>     
     </body>
 </html>

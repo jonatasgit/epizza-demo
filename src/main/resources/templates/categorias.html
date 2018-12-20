@@ -18,7 +18,9 @@
                             <tr>
                                 <th>Nome</th>   
                                 <th>Ordem do Cardápio</th>
-                                <th>Disponível</th> 
+                                <th>Disponível</th>
+                                <th>Permite Meio a Meio?</th>
+                                <th>Calcula preço médio dos sabores?</th> 
                                 <th>Editar</th>                                                                                  
                             </tr>
                         </thead>
@@ -27,6 +29,14 @@
                                 <td th:text="${categoria.nome}"></td>  
                                 <td th:text="${categoria.ordem}"></td>
                                 <td th:switch="${categoria.disponivel}"> 
+								  <p th:case="true">Sim</p>
+								  <p th:case="false">Não</p>								  
+								</td> 
+								<td th:switch="${categoria.permite2Sabores}"> 
+								  <p th:case="true">Sim</p>
+								  <p th:case="false">Não</p>								  
+								</td> 
+								<td th:switch="${categoria.precoMedio2Sabores}"> 
 								  <p th:case="true">Sim</p>
 								  <p th:case="false">Não</p>								  
 								</td>    

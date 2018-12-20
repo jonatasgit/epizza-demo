@@ -41,6 +41,8 @@ public class CategoriaController {
 	public String salvarCategoria(@RequestParam String nome,
 								  @RequestParam String ordem,
 								  @RequestParam Boolean disponivel,
+								  @RequestParam Boolean permite2Sabores,
+								  @RequestParam Boolean precoMedio2Sabores,
 								  HttpSession session) {
 		Categoria categoria = new Categoria();
 		categoria.setNome(nome);
@@ -49,6 +51,9 @@ public class CategoriaController {
 		categoria.setCliente(cliente);
 		categoria.setOrdem(ordem);
 		categoria.setDisponivel(disponivel);
+		categoria.setPermite2Sabores(permite2Sabores);
+		categoria.setPrecoMedio2Sabores(precoMedio2Sabores);
+		
 		categoriaRepo.save(categoria);
 		
 		return "redirect:/categorias";
@@ -59,6 +64,8 @@ public class CategoriaController {
 								@RequestParam String nome, 
 								@RequestParam String ordem,	
 								@RequestParam Boolean disponivel,
+								@RequestParam Boolean permite2Sabores,
+								@RequestParam Boolean precoMedio2Sabores,
 								Model model,
 								HttpSession session) {
 		Cliente clienteLogado = (Cliente) session.getAttribute("cliente");
@@ -66,6 +73,8 @@ public class CategoriaController {
 		categoriaExistente.setNome(nome);
 		categoriaExistente.setOrdem(ordem);
 		categoriaExistente.setDisponivel(disponivel);
+		categoriaExistente.setPermite2Sabores(permite2Sabores);
+		categoriaExistente.setPrecoMedio2Sabores(precoMedio2Sabores);
 
 		categoriaRepo.save(categoriaExistente);
 		

@@ -35,8 +35,30 @@
 					    </label>
 					 </div>										
 			      </div>
+			      <div class="row">
+	             	<div class="switch col s12 m6 l4">
+			      	  <label for="icon_prefix">Categoria Permite Meio a Meio?</label><br>
+					    <label>
+					      Não
+					      <input id="2saboresN" type="hidden" name="permite2Sabores" th:value="false"/>
+					      <input id="2saboresS" type="checkbox" name="permite2Sabores" th:value="true"/>
+					      <span class="lever"></span>
+					      Sim
+					    </label>
+					 </div>
+					 <div class="switch col s12 m6 l4" id="divPrecoMedio" hidden>
+			      	  <label for="icon_prefix">Considerar preço médio dos sabores?</label><br>
+					    <label>
+					      Não
+					      <input id="precoMedioN" type="hidden" name="precoMedio2Sabores" th:value="false"/>
+					      <input id="precoMedioS" type="checkbox" name="precoMedio2Sabores" th:value="true"/>
+					      <span class="lever"></span>
+					      Sim
+					    </label>
+					 </div>
+	             </div> 
 			      <div class="row center">
-			     	 <button type="submit" onclick="validaCheckbox();" class="btn btn-success">Atualizar</button>
+			     	 <button type="submit" onclick="validaCheckboxCategoria();" class="btn btn-success">Atualizar</button>
 			      </div>
 			    </form>
 			  </div>                      

@@ -10,6 +10,8 @@ public class Categoria {
 	private String nome;
 	private String ordem;
 	private Boolean disponivel;
+	private Boolean permite2Sabores;
+	private Boolean precoMedio2Sabores;
 	private Cliente cliente;
 	
 	
@@ -43,6 +45,18 @@ public class Categoria {
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	public Boolean getPermite2Sabores() {
+		return permite2Sabores;
+	}
+	public void setPermite2Sabores(Boolean permite2Sabores) {
+		this.permite2Sabores = permite2Sabores;
+	}
+	public Boolean getPrecoMedio2Sabores() {
+		return precoMedio2Sabores;
+	}
+	public void setPrecoMedio2Sabores(Boolean precoMedio2Sabores) {
+		this.precoMedio2Sabores = precoMedio2Sabores;
 	}
 	
 	
