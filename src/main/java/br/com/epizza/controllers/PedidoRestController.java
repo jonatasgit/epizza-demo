@@ -1,5 +1,6 @@
 package br.com.epizza.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,6 +33,19 @@ public class PedidoRestController {
 	CategoriaRepository categoriaRepository;
 	@Autowired
 	PedidoRepository pedidoRepository;
+	
+	@CrossOrigin
+	@RequestMapping(value="/verificarPedidos", method=RequestMethod.GET)
+	public List<Pedido> verificarPedidos(@RequestParam("cliente") String cliente,
+								   		 @RequestParam("mesa") String mesa) {
+		
+		LocalDate hoje =  LocalDate.now();
+		LocalDate amanha = hoje.plusDays(1);
+		Cliente restaurante = clienteRepository.findOneByid(cliente);
+		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusAndDataBetween(restaurante, mesa, "Enviado", hoje, amanha);
+		
+		return pedidos;
+	}
 	
 	@CrossOrigin
 	@RequestMapping(value="/buscarCardapio", method=RequestMethod.GET)
