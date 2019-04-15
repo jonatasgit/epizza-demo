@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.epizza.models.Cardapio;
 import br.com.epizza.models.Categoria;
 import br.com.epizza.models.Cliente;
+import br.com.epizza.models.ClientesLogados;
 import br.com.epizza.models.Pedido;
 import br.com.epizza.models.Produto;
 import br.com.epizza.repositories.CategoriaRepository;
@@ -36,7 +37,7 @@ public class PedidoRestController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/verificarPedidos", method=RequestMethod.GET)
-	public List<Pedido> verificarPedidos(@RequestParam("cliente") String cliente,
+	public ClientesLogados verificarPedidos(@RequestParam("cliente") String cliente,
 								   		 @RequestParam("mesa") String mesa) {
 		
 		LocalDate hoje =  LocalDate.now();
@@ -44,7 +45,10 @@ public class PedidoRestController {
 		Cliente restaurante = clienteRepository.findOneByid(cliente);
 		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusAndDataBetween(restaurante, mesa, "Enviado", hoje, amanha);
 		
-		return pedidos;
+		ClientesLogados logados = new ClientesLogados();
+		logados.setPedidosEnviados(pedidos);
+		
+		return logados;
 	}
 	
 	@CrossOrigin
