@@ -2,6 +2,7 @@ package br.com.epizza.controllers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,31 @@ public class PedidoRestController {
 		Cliente restaurante = clienteRepository.findOneByid(cliente);
 		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusAndDataBetween(restaurante, mesa, "Enviado", hoje, amanha);
 		
+		List<Pedido> listaNova = new ArrayList<Pedido>();
+		
+		for(Pedido pedido : pedidos) {
+			int index = 1;
+			for(Pedido pedidoNovo : listaNova) {
+				if(pedido.getApelido().equals(pedidoNovo.getApelido())) {
+					List<Produto> produtosParaAdicionar = pedido.getProdutos();
+					for(Produto produtoAdd : produtosParaAdicionar) {
+						pedidoNovo.getProdutos().add(produtoAdd);
+					}
+				} else if (index == listaNova.size()){
+					listaNova.add(pedido);
+					break;
+				}	
+				index++;
+			}
+			if(listaNova.isEmpty()) {
+				listaNova.add(pedido);
+			}
+		}
+		
+		
+		
 		ClientesLogados logados = new ClientesLogados();
-		logados.setPedidosEnviados(pedidos);
+		logados.setPedidosEnviados(listaNova);
 		
 		return logados;
 	}
