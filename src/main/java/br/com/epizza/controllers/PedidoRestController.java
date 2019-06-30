@@ -45,17 +45,13 @@ public class PedidoRestController {
 	public ClientesLogados verificarPedidos(@RequestParam("cliente") String cliente,
 								   		 @RequestParam("mesa") String mesa) {
 		
-		logger.trace("A TRACE Message");
-        logger.debug("A DEBUG Message");
-        logger.info("An INFO Message");
-        logger.warn("A WARN Message");
-        logger.error("An ERROR Message");
-		
 		LocalDate hoje =  LocalDate.now();
 		LocalDate amanha = hoje.plusDays(1);
 		Cliente restaurante = clienteRepository.findOneByid(cliente);
-		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusAndDataBetween(restaurante, mesa, "Enviado", hoje, amanha);
+		//LOG
+		logger.info("Verificando Pedidos am aberto para o Cliente: " + restaurante.getNomeFantasia());
 		
+		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusAndDataBetween(restaurante, mesa, "Enviado", hoje, amanha);
 		List<Pedido> listaNova = new ArrayList<Pedido>();
 		
 		for(Pedido pedido : pedidos) {
@@ -91,8 +87,13 @@ public class PedidoRestController {
 									@RequestParam("mesa") String mesa) {
 		
 		Cliente restaurante = clienteRepository.findOneByid(cliente);
+		//LOG
+		logger.info("Buscando cardápio para o Cliente: " + restaurante.getNomeFantasia());
+		
 		List<Produto> produtos = produtoRepository.findAllByClienteAndDisponivel(restaurante, true);
 		List<Categoria> categorias = categoriaRepository.findAllByClienteAndDisponivelOrderByOrdemAsc(restaurante, true);
+		
+		
 		
 		Cardapio cardapio = new Cardapio();
 		cardapio.setCategorias(categorias);
@@ -106,6 +107,9 @@ public class PedidoRestController {
 	@CrossOrigin
 	@RequestMapping(value="/enviarPedido", method=RequestMethod.POST)
 	public boolean enviarPedido(@RequestBody Pedido pedido) {
+		
+		//LOG
+		logger.info("Salvando pedido do usuario: " + pedido.getApelido());
 		
 		pedido.setData(LocalDateTime.now());
 		
