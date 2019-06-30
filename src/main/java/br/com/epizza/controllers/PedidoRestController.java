@@ -2,6 +2,7 @@ package br.com.epizza.controllers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class PedidoRestController {
 		LocalDate amanha = hoje.plusDays(1);
 		Cliente restaurante = clienteRepository.findOneByid(cliente);
 		//LOG
-		logger.info("Verificando Pedidos am aberto para o Cliente: " + restaurante.getNomeFantasia());
+		logger.info("Verificando Pedidos em aberto para o Cliente: " + restaurante.getNomeFantasia());
 		
 		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusAndDataBetween(restaurante, mesa, "Enviado", hoje, amanha);
 		List<Pedido> listaNova = new ArrayList<Pedido>();
@@ -88,7 +89,7 @@ public class PedidoRestController {
 		
 		Cliente restaurante = clienteRepository.findOneByid(cliente);
 		//LOG
-		logger.info("Buscando cardápio para o Cliente: " + restaurante.getNomeFantasia());
+		logger.info("Buscando cardapio para o Cliente: " + restaurante.getNomeFantasia());
 		
 		List<Produto> produtos = produtoRepository.findAllByClienteAndDisponivel(restaurante, true);
 		List<Categoria> categorias = categoriaRepository.findAllByClienteAndDisponivelOrderByOrdemAsc(restaurante, true);
@@ -111,7 +112,7 @@ public class PedidoRestController {
 		//LOG
 		logger.info("Salvando pedido do usuario: " + pedido.getApelido());
 		
-		pedido.setData(LocalDateTime.now());
+		pedido.setData(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 		
 		pedidoRepository.save(pedido);
 				
