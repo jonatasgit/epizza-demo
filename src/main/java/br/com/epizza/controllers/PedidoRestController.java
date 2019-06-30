@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,10 +38,18 @@ public class PedidoRestController {
 	@Autowired
 	PedidoRepository pedidoRepository;
 	
+	Logger logger = LoggerFactory.getLogger(PedidoRestController.class);
+	
 	@CrossOrigin
 	@RequestMapping(value="/verificarPedidos", method=RequestMethod.GET)
 	public ClientesLogados verificarPedidos(@RequestParam("cliente") String cliente,
 								   		 @RequestParam("mesa") String mesa) {
+		
+		logger.trace("A TRACE Message");
+        logger.debug("A DEBUG Message");
+        logger.info("An INFO Message");
+        logger.warn("A WARN Message");
+        logger.error("An ERROR Message");
 		
 		LocalDate hoje =  LocalDate.now();
 		LocalDate amanha = hoje.plusDays(1);
