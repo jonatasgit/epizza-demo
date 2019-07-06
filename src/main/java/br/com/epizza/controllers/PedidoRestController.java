@@ -2,9 +2,12 @@ package br.com.epizza.controllers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +39,8 @@ public class PedidoRestController {
 	@Autowired
 	PedidoRepository pedidoRepository;
 	
+	Logger logger = LoggerFactory.getLogger(PedidoRestController.class);
+	
 	@CrossOrigin
 	@RequestMapping(value="/verificarPedidos", method=RequestMethod.GET)
 	public ClientesLogados verificarPedidos(@RequestParam("cliente") String cliente,
@@ -44,8 +49,10 @@ public class PedidoRestController {
 		LocalDate hoje =  LocalDate.now();
 		LocalDate amanha = hoje.plusDays(1);
 		Cliente restaurante = clienteRepository.findOneByid(cliente);
-		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusAndDataBetween(restaurante, mesa, "Enviado", hoje, amanha);
+		//LOG
+		logger.info("Verificando Pedidos em aberto para o Cliente: " + restaurante.getNomeFantasia());
 		
+		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusAndDataBetween(restaurante, mesa, "Enviado", hoje, amanha);
 		List<Pedido> listaNova = new ArrayList<Pedido>();
 		
 		for(Pedido pedido : pedidos) {
@@ -81,8 +88,13 @@ public class PedidoRestController {
 									@RequestParam("mesa") String mesa) {
 		
 		Cliente restaurante = clienteRepository.findOneByid(cliente);
+		//LOG
+		logger.info("Buscando cardapio para o Cliente: " + restaurante.getNomeFantasia());
+		
 		List<Produto> produtos = produtoRepository.findAllByClienteAndDisponivel(restaurante, true);
 		List<Categoria> categorias = categoriaRepository.findAllByClienteAndDisponivelOrderByOrdemAsc(restaurante, true);
+		
+		
 		
 		Cardapio cardapio = new Cardapio();
 		cardapio.setCategorias(categorias);
@@ -97,7 +109,10 @@ public class PedidoRestController {
 	@RequestMapping(value="/enviarPedido", method=RequestMethod.POST)
 	public boolean enviarPedido(@RequestBody Pedido pedido) {
 		
-		pedido.setData(LocalDateTime.now());
+		//LOG
+		logger.info("Salvando pedido do usuario: " + pedido.getApelido());
+		
+		pedido.setData(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 		
 		pedidoRepository.save(pedido);
 				
