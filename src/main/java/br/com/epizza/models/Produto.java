@@ -7,15 +7,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Produto {
 	
 	@Id
-	String id;
-	String nome;
-	String descricao;
-	Double preco;
-	Boolean disponivel;
-	Categoria categoria;
-	Cliente cliente;
-	Integer quantidade;
-	String observacao;
+	private String id;
+	private String nome;
+	private String descricao;
+	private Double preco;
+	private Boolean disponivel;
+	private Categoria categoria;
+	private Cliente cliente;
+	private Integer quantidade;
+	private String observacao;
 	
 	
 	public String getId() {

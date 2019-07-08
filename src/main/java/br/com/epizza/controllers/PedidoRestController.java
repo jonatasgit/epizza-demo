@@ -49,6 +49,7 @@ public class PedidoRestController {
 		LocalDate hoje =  LocalDate.now();
 		LocalDate amanha = hoje.plusDays(1);
 		Cliente restaurante = clienteRepository.findOneByid(cliente);
+		
 		//LOG
 		logger.info("Verificando Pedidos em aberto para o Cliente: " + restaurante.getNomeFantasia());
 		
@@ -57,12 +58,19 @@ public class PedidoRestController {
 		
 		for(Pedido pedido : pedidos) {
 			int index = 1;
+			
 			for(Pedido pedidoNovo : listaNova) {
 				if(pedido.getApelido().equals(pedidoNovo.getApelido())) {
+					
+					String idAtual = pedidoNovo.getId();
+					pedidoNovo.setId(idAtual+"@"+pedido.getId());
+					
 					List<Produto> produtosParaAdicionar = pedido.getProdutos();
+					
 					for(Produto produtoAdd : produtosParaAdicionar) {
 						pedidoNovo.getProdutos().add(produtoAdd);
 					}
+					
 				} else if (index == listaNova.size()){
 					listaNova.add(pedido);
 					break;
@@ -115,6 +123,41 @@ public class PedidoRestController {
 		pedido.setData(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 		
 		pedidoRepository.save(pedido);
+				
+		return true;		
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value="/fecharConta", method=RequestMethod.POST)
+	public boolean fecharConta(@RequestBody Pedido pedido) {
+		//LOG
+		logger.info("Fechando conta do usuario: " + pedido.getApelido());
+		
+		Pedido pedidoParaAtualizar = new Pedido();
+		
+		if(pedido.getId().contains("@")) {
+
+			String[] ids = pedido.getId().split("@");
+						
+			for(String id : ids) {
+				pedidoParaAtualizar  = pedidoRepository.findOneByid(id);
+				pedidoParaAtualizar.setStatus("Fechado");
+				pedidoParaAtualizar.setGroupId(pedido.getId());
+				pedidoParaAtualizar.setConta(pedido.getConta());
+				
+				pedidoRepository.save(pedidoParaAtualizar);
+			}
+		} else {
+			pedidoParaAtualizar  = pedidoRepository.findOneByid(pedido.getId());
+			pedidoParaAtualizar.setStatus("Fechado");
+			pedidoParaAtualizar.setConta(pedido.getConta());
+			
+			pedidoRepository.save(pedidoParaAtualizar);
+		}	
+		//pedido.setData(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+		//pedido.setStatus("Fechado");
+		
+		//pedidoRepository.save(pedido);
 				
 		return true;		
 	}

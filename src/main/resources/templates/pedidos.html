@@ -21,7 +21,7 @@
 		                            Mesa: &nbsp;<b th:text="${pedido.mesa}"></b>&nbsp;		                            
 		                            Status:&nbsp; <b th:text="${pedido.status}"></b>&nbsp;
 		                            por&nbsp; <b th:text="${pedido.apelido}"></b>&nbsp;	
-		                            às&nbsp; <b th:text="${#temporals.format(pedido.data, '(HH:mm) dd/MM/yyyy')}"></b>&nbsp;		                           
+		                            às&nbsp; <b th:text="${#temporals.format(pedido.data, '(HH:mm) dd/MM/yyyy')}"></b>&nbsp;			                             	                          
 		                              	                             	                   
 					      </div>					      
 					      <div class="collapsible-body" >
@@ -64,9 +64,23 @@
 		                            		                           
 		                              	                             	                   
 					      </div>					      
-					      <div class="collapsible-body" th:each="produto : ${pedido.produtos}">
-					      	
-					      	<span  th:text="${produto.nome}"></span>
+					      <div class="collapsible-body" >
+					      <div class="row" style="font-weight: bold">		   
+		    					<div class="col s4 m4 l4">Nome</div>
+		    					<div class="col s4 m4 l4">Qtde.</div>		    					
+		    					<div class="col s4 m4 l4">Observação do Cliente</div>		    					
+		    				</div>	
+					      <div th:each="produto : ${pedido.produtos}">
+					      						   
+	                        <div class="row">		   
+		    					<div class="col s4 m4 l4"><td th:text="${produto.nome}"></td>  
+		    					</div>
+		    					<div class="col s4 m4 l4"><td th:text="${produto.quantidade}"></td>
+		    					</div>
+		    					<div class="col s4 m4 l4"><td th:text="${produto.observacao}"></td>
+		    					</div>
+		    				</div>
+		    				</div>								      		
 					      </div>										      
 				    </li>	
 				      		   
@@ -77,7 +91,42 @@
 		 <div class="row">
 		 	<div class="col s12 m12 l12">
 		 		<h4 class="row center">Fechamentos Recebidos</h4>
-		 		
+		 		<ul class="collapsible center">
+				    <li th:each="pedido : ${pedidosFechados}" th:id="${pedido.id}">
+					      <div class="collapsible-header">
+					      		
+		                            
+		                            Mesa: &nbsp;<b th:text="${pedido.mesa}"></b>&nbsp;		                            
+		                            Status:&nbsp; <b th:text="${pedido.status}"></b>&nbsp;
+		                            por&nbsp; <b th:text="${pedido.apelido}"></b>&nbsp;	
+		                            		                           
+		                            Total da conta R$<b th:text="${pedido.conta}"></b>  	                             	                   
+					      </div>					      
+					      <div class="collapsible-body" >
+					      <div class="row" style="font-weight: bold">		   
+		    					<div class="col s3 m3 l3">Nome</div>
+		    					<div class="col s3 m3 l3">Qtde.</div>
+		    					<div class="col s3 m3 l3">Preço</div>		    					
+		    					<div class="col s3 m3 l3">Observação do Cliente</div>		    					
+		    				</div>	
+					      <div th:each="produto : ${pedido.produtos}">
+					      						   
+	                        <div class="row">		   
+		    					<div class="col s3 m3 l3"><td th:text="${produto.nome}"></td>  
+		    					</div>
+		    					<div class="col s3 m3 l3"><td th:text="${produto.quantidade}"></td>
+		    					</div>
+		    					<div class="col s3 m3 l3"><td th:text="${produto.preco}"></td>
+		    					</div>
+		    					<div class="col s3   m3 l3"><td th:text="${produto.observacao}"></td>
+		    					</div>
+		    				</div>
+		    				</div>								      		
+					      </div>						
+				      
+				    </li>	
+				      		   
+				  </ul>
 		 	</div>
 		 </div>
          

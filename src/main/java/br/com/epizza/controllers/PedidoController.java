@@ -2,6 +2,7 @@ package br.com.epizza.controllers;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -44,6 +45,7 @@ public class PedidoController {
 		}
 		model.addAttribute("pedidosEnviados", pedidoRepository.findAllByClienteAndStatusOrderByDataDesc(clienteLogado, "Enviado"));
 		model.addAttribute("pedidosRecebidos", pedidoRepository.findAllByClienteAndStatusOrderByDataDesc(clienteLogado, "Recebido"));
+		model.addAttribute("pedidosFechados", this.buscarPedidosFechados(clienteLogado));
 		
 		return "pedidos";
 	}
@@ -63,7 +65,39 @@ public class PedidoController {
 		
 		model.addAttribute("pedidosEnviados", pedidoRepository.findAllByClienteAndStatusOrderByDataDesc(clienteLogado, "Enviado"));
 		model.addAttribute("pedidosRecebidos", pedidoRepository.findAllByClienteAndStatusOrderByDataDesc(clienteLogado, "Recebido"));
+		model.addAttribute("pedidosFechados", this.buscarPedidosFechados(clienteLogado));
 		
 		return "pedidos";
+	}
+	
+	private List<Pedido> buscarPedidosFechados(Cliente restaurante){
+		
+		List<Pedido> pedidosFechados = pedidoRepository.findAllByClienteAndStatusOrderByDataDesc(restaurante, "Fechado");
+		List<Pedido> listaNova = new ArrayList<Pedido>();
+		
+		for(Pedido pedido : pedidosFechados) {
+			int index = 1;
+			
+			for(Pedido pedidoNovo : listaNova) {
+				if(pedido.getApelido().equals(pedidoNovo.getApelido())) {
+					
+					List<Produto> produtosParaAdicionar = pedido.getProdutos();
+					
+					for(Produto produtoAdd : produtosParaAdicionar) {
+						pedidoNovo.getProdutos().add(produtoAdd);
+					}
+					
+				} else if (index == listaNova.size()){
+					listaNova.add(pedido);
+					break;
+				}	
+				index++;
+			}
+			if(listaNova.isEmpty()) {
+				listaNova.add(pedido);
+			}
+		}
+		
+		return listaNova; 		
 	}
 }

@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Cliente {
 	
 	@Id
-	String id;
-	String email;
-	String senha;
-	String nomeFantasia;
-	String razaoSocial;
-	Boolean status;
+	private String id;
+	private String email;
+	private String senha;
+	private String nomeFantasia;
+	private String razaoSocial;
+	private Boolean status;
 	
 	public String getId() {
 		return id;
