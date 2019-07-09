@@ -53,7 +53,7 @@ public class PedidoRestController {
 		//LOG
 		logger.info("Verificando Pedidos em aberto para o Cliente: " + restaurante.getNomeFantasia());
 		
-		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusAndDataBetween(restaurante, mesa, "Enviado", hoje, amanha);
+		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusInAndDataBetween(restaurante, mesa, "Enviado,Recebido", hoje, amanha);
 		List<Pedido> listaNova = new ArrayList<Pedido>();
 		
 		for(Pedido pedido : pedidos) {
