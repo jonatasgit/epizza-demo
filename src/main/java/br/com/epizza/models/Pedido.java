@@ -18,7 +18,7 @@ public class Pedido {
 	private String status;
 	private LocalDateTime data;
 	private Double conta;
-	private String groupId;
+	private Integer idLocalPagamento;
 	
 	public String getId() {
 		return id;
@@ -68,11 +68,11 @@ public class Pedido {
 	public void setConta(Double conta) {
 		this.conta = conta;
 	}
-	public String getGroupId() {
-		return groupId;
+	public Integer getIdLocalPagamento() {
+		return idLocalPagamento;
 	}
-	public void setGroupId(String groupId) {
-		this.groupId = groupId;
+	public void setIdLocalPagamento(Integer idLocalPagamento) {
+		this.idLocalPagamento = idLocalPagamento;
 	}
 	
 	

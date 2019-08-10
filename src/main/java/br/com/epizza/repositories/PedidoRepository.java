@@ -13,5 +13,6 @@ public interface PedidoRepository extends CrudRepository<Pedido, String> {
 	Pedido findOneByid(final String id);
 	List<Pedido> findAllBycliente(final Cliente cliente);
 	List<Pedido> findAllByClienteAndStatusOrderByDataDesc(final Cliente cliente, final String status);
-	List<Pedido> findAllByClienteAndMesaAndStatusInAndDataBetween(final Cliente cliente, final String mesa, final String status, final LocalDate dataStart, final LocalDate dataEnd);
+	List<Pedido> findAllByClienteAndMesaAndStatusInAndDataBetween(final Cliente cliente, final String mesa, final List<String> status, final LocalDate dataStart, final LocalDate dataEnd);
+	List<Pedido> findAllByClienteAndMesaAndApelidoAndStatusAndDataBetween(final Cliente cliente, final String mesa, final String apelido, final String status, final LocalDate dataStart, final LocalDate dataEnd);
 }

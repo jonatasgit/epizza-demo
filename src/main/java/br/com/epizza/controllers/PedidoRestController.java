@@ -40,6 +40,8 @@ public class PedidoRestController {
 	PedidoRepository pedidoRepository;
 	
 	Logger logger = LoggerFactory.getLogger(PedidoRestController.class);
+	private Double valorTotalEnviado;
+	private Double valorTotalRecebido;
 	
 	@CrossOrigin
 	@RequestMapping(value="/verificarPedidos", method=RequestMethod.GET)
@@ -52,9 +54,12 @@ public class PedidoRestController {
 		
 		//LOG
 		logger.info("Verificando Pedidos em aberto para o Cliente: " + restaurante.getNomeFantasia());
+		List<String> statusList = new ArrayList<>();
+		statusList.add("Enviado");
+		statusList.add("Recebido");
 		
-		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusInAndDataBetween(restaurante, mesa, "Enviado,Recebido", hoje, amanha);
-		List<Pedido> listaNova = new ArrayList<Pedido>();
+		List<Pedido> pedidos = pedidoRepository.findAllByClienteAndMesaAndStatusInAndDataBetween(restaurante, mesa, statusList, hoje, amanha);
+		List<Pedido> listaNova = new ArrayList<Pedido>(); 
 		
 		for(Pedido pedido : pedidos) {
 			int index = 1;
@@ -131,33 +136,59 @@ public class PedidoRestController {
 	@RequestMapping(value="/fecharConta", method=RequestMethod.POST)
 	public boolean fecharConta(@RequestBody Pedido pedido) {
 		//LOG
-		logger.info("Fechando conta do usuario: " + pedido.getApelido());
+		logger.info("Fechando conta do usuario: " + pedido.getApelido() + " / " + "Mesa: " + pedido.getMesa());
 		
-		Pedido pedidoParaAtualizar = new Pedido();
+		LocalDate hoje =  LocalDate.now();
+		LocalDate amanha = hoje.plusDays(1);
 		
-		if(pedido.getId().contains("@")) {
-
-			String[] ids = pedido.getId().split("@");
-						
-			for(String id : ids) {
-				pedidoParaAtualizar  = pedidoRepository.findOneByid(id);
-				pedidoParaAtualizar.setStatus("Fechado");
-				pedidoParaAtualizar.setGroupId(pedido.getId());
-				pedidoParaAtualizar.setConta(pedido.getConta());
+		
+		//BUSCAR PEDIDOS ENVIADOS
+		List<Pedido> pedidosEnviados = pedidoRepository.findAllByClienteAndMesaAndApelidoAndStatusAndDataBetween(pedido.getCliente(), pedido.getMesa(), pedido.getApelido(), "Enviado", hoje, amanha);
+		if(!pedidosEnviados.isEmpty()) {
+			for(Pedido enviado : pedidosEnviados) {
+				enviado.setStatus("Cancelado");
+				enviado.setIdLocalPagamento(pedido.getIdLocalPagamento());
+				enviado.setConta(pedido.getConta());
 				
-				pedidoRepository.save(pedidoParaAtualizar);
+				
+				pedidoRepository.save(enviado);
 			}
-		} else {
-			pedidoParaAtualizar  = pedidoRepository.findOneByid(pedido.getId());
-			pedidoParaAtualizar.setStatus("Fechado");
-			pedidoParaAtualizar.setConta(pedido.getConta());
-			
-			pedidoRepository.save(pedidoParaAtualizar);
-		}	
-		//pedido.setData(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
-		//pedido.setStatus("Fechado");
+		}
 		
-		//pedidoRepository.save(pedido);
+		//BUSCAR PEDIDOS RECEBIDOS
+		List<Pedido> pedidosRecebidos = pedidoRepository.findAllByClienteAndMesaAndApelidoAndStatusAndDataBetween(pedido.getCliente(), pedido.getMesa(), pedido.getApelido(), "Recebido", hoje, amanha);
+		if(!pedidosRecebidos.isEmpty()) {
+			for(Pedido recebido : pedidosRecebidos) {
+				recebido.setStatus("Fechado");
+				recebido.setIdLocalPagamento(pedido.getIdLocalPagamento());
+				recebido.setConta(pedido.getConta());
+				
+				pedidoRepository.save(recebido);
+			}
+		}
+		
+//		Pedido pedidoParaAtualizar = new Pedido();
+//		
+//		if(pedido.getId().contains("@")) {
+//
+//			String[] ids = pedido.getId().split("@");
+//						
+//			for(String id : ids) {
+//				pedidoParaAtualizar  = pedidoRepository.findOneByid(id);
+//				pedidoParaAtualizar.setStatus("Fechado");
+//				pedidoParaAtualizar.setConta(pedido.getConta());
+//				pedidoParaAtualizar.setIdLocalPagamento(pedido.getIdLocalPagamento());
+//				
+//				pedidoRepository.save(pedidoParaAtualizar);
+//			}
+//		} else {
+//			pedidoParaAtualizar  = pedidoRepository.findOneByid(pedido.getId());
+//			pedidoParaAtualizar.setStatus("Fechado");
+//			pedidoParaAtualizar.setConta(pedido.getConta());
+//			pedidoParaAtualizar.setIdLocalPagamento(pedido.getIdLocalPagamento());
+//			
+//			pedidoRepository.save(pedidoParaAtualizar);
+//		}	
 				
 		return true;		
 	}
