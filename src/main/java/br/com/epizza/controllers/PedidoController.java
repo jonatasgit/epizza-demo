@@ -62,9 +62,13 @@ public class PedidoController {
 		}
 		
 		Pedido pedidoRecebido = pedidoRepository.findOneByid(id);
-		pedidoRecebido.setStatus("Recebido");
-		pedidoRecebido.setData(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
-		pedidoRepository.save(pedidoRecebido);
+		//RECEBE APENAS OS ENVIADOS
+		if(pedidoRecebido.getStatus().equals("Enviado")) {
+			pedidoRecebido.setStatus("Recebido");
+			pedidoRecebido.setData(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+			pedidoRepository.save(pedidoRecebido);
+		}
+		
 		
 		model.addAttribute("pedidosEnviados", pedidoRepository.findAllByClienteAndStatusOrderByDataDesc(clienteLogado, "Enviado"));
 		model.addAttribute("pedidosRecebidos", pedidoRepository.findAllByClienteAndStatusOrderByDataDesc(clienteLogado, "Recebido"));
