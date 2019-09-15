@@ -1,5 +1,6 @@
 package br.com.epizza.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.epizza.models.Categoria;
 import br.com.epizza.models.Cliente;
@@ -79,7 +82,7 @@ public class PedidoController {
 			int index = 1;
 			
 			for(Pedido pedidoNovo : listaNova) {
-				if(pedido.getApelido().equals(pedidoNovo.getApelido())) {
+				if(pedido.getApelido().equals(pedidoNovo.getApelido()) && pedido.getMesa().equals(pedidoNovo.getMesa())) {
 					
 					List<Produto> produtosParaAdicionar = pedido.getProdutos();
 					
@@ -99,5 +102,42 @@ public class PedidoController {
 		}
 		
 		return listaNova; 		
+	}
+	
+	@RequestMapping(value="/receberPagamento", method=RequestMethod.GET)
+	public String salvarCategoria(@RequestParam String id,
+								  @RequestParam Double desconto,
+								  @RequestParam String cupom,
+								  @RequestParam String formaPagamento,
+								 
+								  HttpSession session) {
+		
+//		Pedido pedido = new Pedido();
+//		pedido = pedidoRepository.findOneByid(id);
+//		
+//		LocalDate hoje =  LocalDate.now(ZoneId.of("America/Sao_Paulo"));
+//		LocalDate amanha = hoje.plusDays(1);
+//		hoje = hoje.minusDays(180);
+//		
+//		//BUSCAR PEDIDOS FECHADOS
+//				List<Pedido> pedidosFechados = pedidoRepository.findAllByClienteAndMesaAndApelidoAndStatusAndDataBetween(pedido.getCliente(), pedido.getMesa(), pedido.getApelido(), "Fechado", hoje, amanha);
+//				if(!pedidosFechados.isEmpty()) {
+//					for(Pedido fechado : pedidosFechados) {
+//						fechado.setStatus("Pago");
+//						fechado.setFormaPagamento(formaPagamento);
+//						//APLICAR DESCONTO SE DEFINIDO
+//						if(desconto != null && !desconto.toString().isEmpty()) {
+//							fechado.setDesconto(desconto);
+//							fechado.setConta(pedido.getConta() - desconto);
+//						}
+//						
+//						pedidoRepository.save(fechado);
+//					}
+//				}
+		
+		
+	
+		
+		return "redirect:/pedidos";
 	}
 }

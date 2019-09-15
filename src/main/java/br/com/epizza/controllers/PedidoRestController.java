@@ -138,7 +138,7 @@ public class PedidoRestController {
 		//LOG
 		logger.info("Fechando conta do usuario: " + pedido.getApelido() + " / " + "Mesa: " + pedido.getMesa());
 		
-		LocalDate hoje =  LocalDate.now();
+		LocalDate hoje =  LocalDate.now(ZoneId.of("America/Sao_Paulo"));
 		LocalDate amanha = hoje.plusDays(1);
 		
 		

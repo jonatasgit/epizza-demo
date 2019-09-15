@@ -7,15 +7,16 @@
         <title>Lista de Pedidos</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
-    <body>
+    
+    <body class="noprint">
     <div class="container-fluid">
         <div layout:fragment="content" class="row">
         <div class="row">		   
 		    <div class="col s6 m6 l6">
 		    	<h4 class="row center">Pedidos Recebidos</h4>
 		    	<ul class="collapsible center">
-				    <li th:each="pedido : ${pedidosEnviados}" th:id="${pedido.id}">
-					      <div class="collapsible-header">
+				    <li th:each="pedido : ${pedidosEnviados}" >
+					      <div class="collapsible-header" th:id="${pedido.id}">
 					      		
 		                            
 		                            Mesa: &nbsp;<b th:text="${pedido.mesa}"></b>&nbsp;		                            
@@ -25,63 +26,59 @@
 		                              	                             	                   
 					      </div>					      
 					      <div class="collapsible-body" >
-					      <div class="row" style="font-weight: bold">		   
-		    					<div class="col s4 m4 l4">Nome</div>
-		    					<div class="col s4 m4 l4">Qtde.</div>		    					
-		    					<div class="col s4 m4 l4">Observação do Cliente</div>		    					
-		    				</div>	
-					      <div th:each="produto : ${pedido.produtos}">
-					      						   
-	                        <div class="row">		   
-		    					<div class="col s4 m4 l4"><td th:text="${produto.nome}"></td>  
-		    					</div>
-		    					<div class="col s4 m4 l4"><td th:text="${produto.quantidade}"></td>
-		    					</div>
-		    					<div class="col s4 m4 l4"><td th:text="${produto.observacao}"></td>
-		    					</div>
-		    				</div>
-		    				</div>								      		
+					      <table style="width:100%" >
+							  <tr>
+							    <th>Nome</th>
+							    <th>Qtde.</th> 
+							    <th>Observação</th>
+							  </tr>
+							  <tr th:each="produto : ${pedido.produtos}">
+							    <td th:class="'#1.1'+${pedido.id}" th:text="${produto.nome}"></td> 
+							    <td th:class="'#1.2'+${pedido.id}" th:text="${produto.quantidade}"></td>
+							    <td th:class="'#1.3'+${pedido.id}" th:text="${produto.observacao}"></td>
+							  </tr>
+							  
+							</table>									      		
 					      </div>						
 				      <a class="waves-effect waves-light btn-floating tooltipped" data-position="top" data-tooltip="Imprimir Pedido" 
 				      		th:attr="onclick=|imprimir('${pedido.id}')|" 
 				      		th:href="@{'/receberPedido-' + ${pedido.id}}">
-				      		<i class="material-icons left">print</i></a> 
+				      		<i class="material-icons">print</i></a> 
 				    </li>	
 				      		   
 				  </ul>
 		    </div>
 		    <div class="col s6 m6 l6"><h4 class="row center">Pedidos Impressos</h4>
 		    <ul class="collapsible center">
-				    <li th:each="pedido : ${pedidosRecebidos}" th:id="${pedido.id}">
-					      <div class="collapsible-header">
-					      		
-		                            
+				    <li th:each="pedido : ${pedidosRecebidos}" >
+					      <div class="collapsible-header" th:id="${pedido.id}">
 		                            Mesa: &nbsp;<b th:text="${pedido.mesa}"></b>&nbsp;	
 		                            Cliente:&nbsp; <b th:text="${pedido.apelido}"></b>&nbsp;	                            
-		                            Status:&nbsp; <b th:text="${pedido.status}"></b>&nbsp;
+		                            <!--  Status:&nbsp; <b th:text="${pedido.status}"></b>&nbsp;-->
 		                            às&nbsp; <b th:text="${#temporals.format(pedido.data, '(HH:mm) dd/MM/yyyy')}"></b>&nbsp;
-		                            
-		                            		                           
-		                              	                             	                   
+     	                             	                   
 					      </div>					      
 					      <div class="collapsible-body" >
-					      <div class="row" style="font-weight: bold">		   
-		    					<div class="col s4 m4 l4">Nome</div>
-		    					<div class="col s4 m4 l4">Qtde.</div>		    					
-		    					<div class="col s4 m4 l4">Observação do Cliente</div>		    					
-		    				</div>	
-					      <div th:each="produto : ${pedido.produtos}">
-					      						   
-	                        <div class="row">		   
-		    					<div class="col s4 m4 l4"><td th:text="${produto.nome}"></td>  
-		    					</div>
-		    					<div class="col s4 m4 l4"><td th:text="${produto.quantidade}"></td>
-		    					</div>
-		    					<div class="col s4 m4 l4"><td th:text="${produto.observacao}"></td>
-		    					</div>
-		    				</div>
-		    				</div>								      		
-					      </div>										      
+					      <table style="width:100%" >
+							  <tr>
+							    <th>Nome</th>
+							    <th>Qtde.</th> 
+							    <th>Observação</th>
+							  </tr>
+							  <tr th:each="produto : ${pedido.produtos}">
+							    <td th:class="'#1.1'+${pedido.id}" th:text="${produto.nome}"></td> 
+							    <td th:class="'#1.2'+${pedido.id}" th:text="${produto.quantidade}"></td>
+							    <td th:class="'#1.3'+${pedido.id}" th:text="${produto.observacao}"></td>
+							  </tr>
+							  
+							</table>	
+		    				<div class="row">
+			    					<a class="waves-effect waves-light btn" th:attr="onclick=|imprimir('${pedido.id}')|" >
+				      				<span>Reimprimir</span>	<i class="material-icons">print</i>
+				      				</a>
+			    				</div>	
+			    								      		
+					      </div>						      
 				    </li>	
 				      		   
 				  </ul>
@@ -94,38 +91,79 @@
 		 		<ul class="collapsible center">
 									 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 											
-				    <li th:each="pedido : ${pedidosFechados}" th:id="${pedido.id}">
-					      <div class="collapsible-header">
-					      		
+				    <li th:each="pedido : ${pedidosFechados}" >
+					      <div class="collapsible-header" th:id="${pedido.id}">
 		                            
-		                            Mesa: &nbsp;<b th:text="${pedido.mesa}"></b>&nbsp;		                            
-		                            Status:&nbsp; <b th:text="${pedido.status}"></b>&nbsp;
-		                            por&nbsp; <b th:text="${pedido.apelido}"></b>&nbsp;	
-		                            		                           
-		                            Total da conta R$<b th:text="${pedido.conta}"></b>  	                             	                   
+		                            Mesa: <b th:text="${pedido.mesa}"></b>&nbsp;
+		                            	
+		                            Local pagamento:
+		                            <div th:switch="${pedido.idLocalPagamento}"> 
+									  <b th:case="'1'">Mesa</b>
+									  <b th:case="'2'">Caixa</b>
+									</div>
+		                            &nbsp;	
+		                            Cliente:<b th:text="${pedido.apelido}"></b>
 					      </div>					      
 					      <div class="collapsible-body" >
-					      <div class="row" style="font-weight: bold">		   
-		    					<div class="col s3 m3 l3">Nome</div>
-		    					<div class="col s3 m3 l3">Qtde.</div>
-		    					<div class="col s3 m3 l3">Preço</div>		    					
-		    					<div class="col s3 m3 l3">Observação do Cliente</div>		    					
-		    				</div>	
-					      <div th:each="produto : ${pedido.produtos}">
-					      						   
-	                        <div class="row">		   
-		    					<div class="col s3 m3 l3"><td th:text="${produto.nome}"></td>  
-		    					</div>
-		    					<div class="col s3 m3 l3"><td th:text="${produto.quantidade}"></td>
-		    					</div>
-		    					<div class="col s3 m3 l3"><td th:text="${produto.preco}"></td>
-		    					</div>
-		    					<div class="col s3   m3 l3"><td th:text="${produto.observacao}"></td>
-		    					</div>
-		    				</div>
-		    				</div>								      		
+					      <table style="width:100%" >
+							  <tr>
+							    <th>Nome</th>
+							    <th>Qtde.</th>
+							    <th>Preço</th> 
+							    <th>Observação</th>
+							  </tr>
+							  <tr th:each="produto : ${pedido.produtos}">
+							    <td th:class="'#2.1'+${pedido.id}" th:text="${produto.nome}"></td> 
+							    <td th:class="'#2.2'+${pedido.id}" th:text="${produto.quantidade}"></td>
+							    <td th:class="'#2.3'+${pedido.id}" th:text="${produto.preco}"></td>
+							    <td th:text="${produto.observacao}"></td>
+							  </tr>
+							  <tr style="font-weight: bold">
+							    <td>TOTAL</td>
+							    <td th:class="'#2.4'+${pedido.id}" th:text="${pedido.conta}"></td> 
+							    <td></td>
+							    <td></td>
+							  </tr>
+							</table>		
+							
+		    				<!--  INICIO FORM PARA RECEBER PAGAMENTO -->
+		    				<div class="row">
+										<form class="col s12 m12 l12" action="/receberPagamento"> 
+											<div class="input-field col s12 m12 l12" style="visibility: hidden">                  
+										          <input id="icon_prefix" type="text"  name="id" class="validate" th:value="${pedido.id}">
+										          <label for="icon_prefix">id</label>
+								            </div> 
+							                <div class="row">
+								                <div class="input-field col s12 m6 l4">                  
+								                  <i class="material-icons prefix">money_off</i>
+										          <input th:id="'desc'+${pedido.id}" th:class="'#2.5'+${pedido.id}" type="number" step="0.01" name="desconto" class="validate" >
+										          <label th:for="'desc'+${pedido.id}">Desconto</label>
+								                 </div> 
+								                 <div class="input-field col s12 m6 l4">                  
+									                  <i class="material-icons prefix">label</i>
+											          <input th:id="'cup'+${pedido.id}" th:class="'#2.6'+${pedido.id}" type="text"  name="cupom" class="validate">
+											          <label th:for="'cup'+${pedido.id}">Cupom</label>
+								                 </div> 
+								                 <div class="input-field col s12 m6 l4">
+												    <select required name="formaPagamento">					    	
+												      <option value="" disabled >Selecione uma forma de pagto.</option>
+												      <option value="cartao" selected>Cartão</option>
+												      <option value="dinheiro"  >Dinheiro</option>
+												      <option value="vale"  >Vale Refeição</option>
+												    </select>
+												    <label>Forma de pagamento</label>
+												  </div>
+								             </div>   
+								             
+									</div>
+		    						<div class="row center">  
+		    									<a class="waves-effect waves-light btn-floating tooltipped" data-position="top" data-tooltip="Imprimir Pedido" 
+									      		 th:attr="onclick=|recibo('${pedido.id}')|">
+									      		<i class="material-icons">print</i></a> 
+							                    <button type="submit"  class="btn btn-success">Receber Pagamento</button>
+							                 </div>   
+							             </form>			      		
 					      </div>						
-				      
 				    </li>	
 				      		   
 				  </ul>
@@ -135,17 +173,70 @@
         
     <script type="text/javascript">
 		    function imprimir(id){
-			
-		    var conteudo = document.getElementById(id).innerHTML,
-		    tela_impressao = window.open('blank');
-			
-			tela_impressao.document.write(conteudo);
-			tela_impressao.window.print();
-			//tela_impressao.window.close();
-		    }
-		    
-		   
-    </script>    
+				    var resumo = document.getElementById(id).innerHTML,
+				    tela_impressao = window.open('blank');
+				    
+				    var nomes = document.getElementsByClassName('#1.1'+id);
+				    var qtdes = document.getElementsByClassName('#1.2'+id);
+				    var obs = document.getElementsByClassName('#1.3'+id);
+				    console.log(nomes);
+				    
+				    for(i = 0; i < nomes.length; i++){
+				    	resumo = resumo + "<br><b>" + nomes[i].innerText + "</b>" + " | Qtde.: " + "<b>" + qtdes[i].innerText + "</b>" + " | OBS.: " + "<b>" + obs[i].innerText + "</b>";
+				    }
+					
+					tela_impressao.document.write(resumo);
+					tela_impressao.window.print();
+			    }
+			    
+			    $(document).ready(function(){
+			        $('.modal').modal();
+			      });
+			    
+			    $(document).ready(function(){
+			        $('select').formSelect();
+		      });
+			    
+			function recibo(id){
+				
+				 	var resumo = document.getElementById(id).innerHTML,
+				    tela_impressao = window.open('blank');
+				    
+				    var nomes = document.getElementsByClassName('#2.1'+id);
+				    var qtdes = document.getElementsByClassName('#2.2'+id);
+				    var preco = document.getElementsByClassName('#2.3'+id);
+				    var total = document.getElementsByClassName('#2.4'+id)[0].innerText;
+				    
+				    var desconto = document.getElementsByClassName('#2.5'+id)[0].value;
+				    var cupom = document.getElementsByClassName('#2.6'+id)[0].value;
+				    
+				    console.log(nomes);
+				    
+				    for(i = 0; i < nomes.length; i++){
+				    	resumo = resumo + "<br>Produto: <b>" + nomes[i].innerText + "</b>" + " | Qtde.: " + "<b>" + qtdes[i].innerText + "</b>" + " | Preço.: " + "<b>" + preco[i].innerText + "</b>";
+				    }
+				    //VERIFICAR DESCONTO
+				    if(desconto == ''){
+				    	
+				    } else {
+				    	resumo = resumo + "<br><b>Desconto : </b>" + desconto;
+				    }
+				    
+				    //VERIFICAR CUPOM
+				    if(cupom == ''){
+				    	
+				    } else {
+				    	resumo = resumo + "<br><b>Cupom : </b>" + cupom;
+				    }
+				    
+				    resumo = resumo + "<br><b>Total: </b>" + total;
+					
+					tela_impressao.document.write(resumo);
+					tela_impressao.window.print();
+			}    
+    </script> 
+    
+  
         </div>
     </div>  
              

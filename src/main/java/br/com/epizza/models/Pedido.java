@@ -19,6 +19,9 @@ public class Pedido {
 	private LocalDateTime data;
 	private Double conta;
 	private Integer idLocalPagamento;
+	private String formaPagamento;
+	private Double desconto;
+	private String cupom;
 	
 	public String getId() {
 		return id;
@@ -73,6 +76,24 @@ public class Pedido {
 	}
 	public void setIdLocalPagamento(Integer idLocalPagamento) {
 		this.idLocalPagamento = idLocalPagamento;
+	}
+	public String getFormaPagamento() {
+		return formaPagamento;
+	}
+	public void setFormaPagamento(String formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+	public Double getDesconto() {
+		return desconto;
+	}
+	public void setDesconto(Double desconto) {
+		this.desconto = desconto;
+	}
+	public String getCupom() {
+		return cupom;
+	}
+	public void setCupom(String cupom) {
+		this.cupom = cupom;
 	}
 	
 	
