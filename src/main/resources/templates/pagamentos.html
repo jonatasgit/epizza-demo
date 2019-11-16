@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="default">
+    <head>
+        <title>Pagamentos Recebidos</title>
+        <meta http-equiv="refresh" content="30"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    
+    <body class="noprint">
+    <div class="container-fluid">
+        <div layout:fragment="content" class="row">
+       
+		 <div class="row">
+		 	<div class="col s12 m12 l12">
+		 		<h4 class="row center">Pagamentos Recebidos</h4>
+		 		<ul class="collapsible center">
+									 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+											
+				    <li th:each="pedido : ${pedidosPagos}" >
+					      <div class="collapsible-header" th:id="${pedido.id}">
+		                            
+		                            Mesa: <b th:class="'#1.1'+${pedido.id}" th:text="${pedido.mesa}"></b>&nbsp;
+		                            	
+		                            Local Pagto.:
+		                            <div th:class="'#1.2'+${pedido.id}" th:switch="${pedido.idLocalPagamento}"> 
+									  <b th:case="'1'">Mesa</b>
+									  <b th:case="'2'">Caixa</b>
+									</div>
+		                            &nbsp;	
+		                            Cliente:<b th:class="'#1.3'+${pedido.id}" th:text="${pedido.apelido}"></b>
+		                            &nbsp;	
+		                            Forma Pagto.:<b th:class="'#1.4'+${pedido.id}" th:text="${pedido.formaPagamento}"></b>
+		                            
+					      </div>					      
+					      <div class="collapsible-body" >
+					      <table style="width:100%" >
+							  <tr>
+							    <th>Nome</th>
+							    <th>Qtde.</th>
+							    <th>Valor</th> 
+							    <th>Observação</th>
+							  </tr>
+							  <tr th:each="produto : ${pedido.produtos}">
+							    <td th:class="'#2.1'+${pedido.id}" th:text="${produto.nome}"></td> 
+							    <td th:class="'#2.2'+${pedido.id}" th:text="${produto.quantidade}"></td>
+							    <td th:class="'#2.3'+${pedido.id}" th:text="${produto.preco}"></td>
+							    <td th:text="${produto.observacao}"></td>
+							  </tr>
+							 
+							   <tr style="font-style: italic">
+							    <td>Descontos aplicados</td>
+							    <td></td>
+							    <td th:class="'#2.5'+${pedido.id}" th:text="${pedido.desconto}"></td> 
+							    
+							  </tr>
+							  <tr style="font-weight: bold">
+							    <td>TOTAL</td>
+							    <td></td>
+							    <td th:class="'#2.4'+${pedido.id}" th:text="${pedido.conta}"></td> 
+							    
+							  </tr>
+							</table>		
+							
+		    				<!--  INICIO FORM PARA RECEBER PAGAMENTO -->
+		    			
+		    						<div class="row center">  
+		    									<a class="waves-effect waves-light btn-floating tooltipped" data-position="top" data-tooltip="Imprimir Recibo" 
+									      		 th:attr="onclick=|recibo('${pedido.id}')|">
+									      		<i class="material-icons">print</i></a> 
+							                    
+							                 </div>   
+							     		      		
+					      </div>						
+				    </li>	
+				      		   
+				  </ul>
+		 	</div>
+		 	<div class="center">
+		 	<button class="waves-effect waves-light btn tooltipped" data-position="top" data-tooltip="Exportar os dados de pagamentos para arquivo Excel" th:attr="onclick=|export_table_to_csv()|">Exportar CSV</button>
+		 	</div>
+		 </div>
+         
+        
+    <script type="text/javascript">
+		    
+			    
+			function recibo(id){
+
+				    tela_impressao = window.open('blank');
+				 	
+				 	var mesa = document.getElementsByClassName('#1.1'+id)[0].innerText;
+				 	var localpagto = document.getElementsByClassName('#1.2'+id)[0].innerText;
+				 	var cliente = document.getElementsByClassName('#1.3'+id)[0].innerText;
+				 	
+				 	var resumo  = "<b>Mesa: </b>" + mesa + "<br><b> Local Pagto.: </b>" + localpagto + "<br>" + "<b>Cliente: </b>" + cliente + "<br>";
+				    
+				    var nomes = document.getElementsByClassName('#2.1'+id);
+				    var qtdes = document.getElementsByClassName('#2.2'+id);
+				    var preco = document.getElementsByClassName('#2.3'+id);
+				    var total = document.getElementsByClassName('#2.4'+id)[0].innerText;
+				    
+				    var desconto = document.getElementsByClassName('#2.5'+id)[0].innerText;
+				    //var cupom = document.getElementsByClassName('#2.6'+id)[0].value;
+				    
+				    console.log(nomes);
+				    
+				    for(i = 0; i < nomes.length; i++){
+				    	resumo = resumo + "<br>Produto: <b>" + nomes[i].innerText + "</b>" + "<br>Qtde.: " + "<b>" + qtdes[i].innerText + "</b>" + " | Preço.: " + "<b>" + preco[i].innerText + "</b>";
+				    }
+				    //VERIFICAR DESCONTO
+				    if(desconto == ''){
+				    	
+				    } else {
+				    	resumo = resumo + "<br>----------------------------------<br><b>Desconto : </b>" + desconto;
+				    }
+				    
+				   
+				    resumo = resumo + "<br>----------------------------------<br><b>Total: </b>" + total;
+					
+					tela_impressao.document.write(resumo);
+					tela_impressao.window.print();
+			}  
+			
+			function export_table_to_csv(html, filename) {
+				var csv = [];
+				var rows = document.querySelectorAll("table tr");
+				
+			    for (var i = 0; i < rows.length; i++) {
+					var row = [], cols = rows[i].querySelectorAll("td, th");
+					
+			        for (var j = 0; j < cols.length; j++) 
+			            row.push(cols[j].innerText);
+			        
+					csv.push(row.join(","));		
+				}
+
+			    // Download CSV
+			    download_csv(csv.join("\n"), "dados.csv");
+			}
+
+			document.querySelector("button").addEventListener("click", function () {
+			    var html = document.querySelector("table").outerHTML;
+				export_table_to_csv(html, "table.csv");
+			});
+			
+			function download_csv(csv, filename) {
+			    var csvFile;
+			    var downloadLink;
+
+			    // CSV FILE
+			    csvFile = new Blob([csv], {type: "text/csv"});
+
+			    // Download link
+			    downloadLink = document.createElement("a");
+
+			    // File name
+			    downloadLink.download = filename;
+
+			    // We have to create a link to the file
+			    downloadLink.href = window.URL.createObjectURL(csvFile);
+
+			    // Make sure that the link is not displayed
+			    downloadLink.style.display = "none";
+
+			    // Add the link to your DOM
+			    document.body.appendChild(downloadLink);
+
+			    // Lanzamos
+			    downloadLink.click();
+			}
+
+    </script> 
+    
+  
+        </div>
+    </div>  
+             
+    </body>
+</html>

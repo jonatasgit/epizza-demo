@@ -53,8 +53,21 @@ public class PedidoController {
 		return "pedidos";
 	}
 	
+	@RequestMapping(value="/pagamentos")
+	public String visualizarPagamentos(Model model, HttpSession session) {
+		
+		Cliente clienteLogado = (Cliente) session.getAttribute("cliente");
+		if(clienteLogado == null) {
+			return "redirect:/login";
+		}
+		
+		model.addAttribute("pedidosPagos", this.buscarPedidosPagos(clienteLogado));
+		
+		return "pagamentos";
+	}
+	
 	@RequestMapping(value="/receberPedido-{id}")
-	public String mostrarProduto(@PathVariable String id, Model model, HttpSession session) {
+	public String receberPedido(@PathVariable String id, Model model, HttpSession session) {
 		
 		Cliente clienteLogado = (Cliente) session.getAttribute("cliente");
 		if(clienteLogado == null) {
@@ -108,6 +121,37 @@ public class PedidoController {
 		return listaNova; 		
 	}
 	
+	private List<Pedido> buscarPedidosPagos(Cliente restaurante){
+		
+		List<Pedido> pedidosPagos = pedidoRepository.findAllByClienteAndStatusOrderByDataDesc(restaurante, "Pago");
+		List<Pedido> listaNova = new ArrayList<Pedido>();
+		
+		for(Pedido pedido : pedidosPagos) {
+			int index = 1;
+			
+			for(Pedido pedidoNovo : listaNova) {
+				if(pedido.getApelido().equals(pedidoNovo.getApelido()) && pedido.getMesa().equals(pedidoNovo.getMesa())) {
+					
+					List<Produto> produtosParaAdicionar = pedido.getProdutos();
+					
+					for(Produto produtoAdd : produtosParaAdicionar) {
+						pedidoNovo.getProdutos().add(produtoAdd);
+					}
+					
+				} else if (index == listaNova.size()){
+					listaNova.add(pedido);
+					break;
+				}	
+				index++;
+			}
+			if(listaNova.isEmpty()) {
+				listaNova.add(pedido);
+			}
+		}
+		
+		return listaNova; 		
+	}
+	
 	@RequestMapping(value="/receberPagamento", method=RequestMethod.GET)
 	public String salvarCategoria(@RequestParam String id,
 								  @RequestParam Double desconto,
@@ -116,28 +160,28 @@ public class PedidoController {
 								 
 								  HttpSession session) {
 		
-//		Pedido pedido = new Pedido();
-//		pedido = pedidoRepository.findOneByid(id);
-//		
-//		LocalDate hoje =  LocalDate.now(ZoneId.of("America/Sao_Paulo"));
-//		LocalDate amanha = hoje.plusDays(1);
-//		hoje = hoje.minusDays(180);
-//		
-//		//BUSCAR PEDIDOS FECHADOS
-//				List<Pedido> pedidosFechados = pedidoRepository.findAllByClienteAndMesaAndApelidoAndStatusAndDataBetween(pedido.getCliente(), pedido.getMesa(), pedido.getApelido(), "Fechado", hoje, amanha);
-//				if(!pedidosFechados.isEmpty()) {
-//					for(Pedido fechado : pedidosFechados) {
-//						fechado.setStatus("Pago");
-//						fechado.setFormaPagamento(formaPagamento);
-//						//APLICAR DESCONTO SE DEFINIDO
-//						if(desconto != null && !desconto.toString().isEmpty()) {
-//							fechado.setDesconto(desconto);
-//							fechado.setConta(pedido.getConta() - desconto);
-//						}
-//						
-//						pedidoRepository.save(fechado);
-//					}
-//				}
+		Pedido pedido = new Pedido();
+		pedido = pedidoRepository.findOneByid(id);
+		
+		LocalDate hoje =  LocalDate.now(ZoneId.of("America/Sao_Paulo"));
+		LocalDate amanha = hoje.plusDays(1);
+		hoje = hoje.minusDays(180);
+		
+		//BUSCAR PEDIDOS FECHADOS
+				List<Pedido> pedidosFechados = pedidoRepository.findAllByClienteAndMesaAndApelidoAndStatusAndDataBetween(pedido.getCliente(), pedido.getMesa(), pedido.getApelido(), "Fechado", hoje, amanha);
+				if(!pedidosFechados.isEmpty()) {
+					for(Pedido fechado : pedidosFechados) {
+						fechado.setStatus("Pago");
+						fechado.setFormaPagamento(formaPagamento);
+						//APLICAR DESCONTO SE DEFINIDO
+						if(desconto != null && !desconto.toString().isEmpty()) {
+							fechado.setDesconto(desconto);
+							fechado.setConta(pedido.getConta() - desconto);
+						}
+						
+						pedidoRepository.save(fechado);
+					}
+				}
 		
 		
 	
