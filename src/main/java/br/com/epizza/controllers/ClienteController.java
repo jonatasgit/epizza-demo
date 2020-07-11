@@ -17,6 +17,7 @@ public class ClienteController {
 	
 	@Autowired
 	private ClienteRepository clienteRepo;
+
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(Model model) {				

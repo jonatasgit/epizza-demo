@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\Users\Jonatas\Documents\Java-Projects\epizza"/>
 			<item value="/home/jonatas/Documentos/Java_Projects/epizza"/>
 		</list>
 		<list key="projectNameTemplate">
