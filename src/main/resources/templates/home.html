@@ -5,16 +5,21 @@
       layout:decorator="default">
     <head>
     	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Novo Cliente</title>
+        <title>Início</title>
     </head>
     <body>
     <div class="container-fluid center">
         <div layout:fragment="content" class="row">
             <div class="col col s12 m6 offset-m3 l4 offset-l4 center">    
             	<h3>Bem vindo </h3>           
-                <h3 th:text="${session.emailcliente}"></h3>             
+                <h4 th:text="${session.emailcliente}"></h4>             
+            </div>          
+            <div class="col s12 m12  l4 offset-l4 center">    
+            	<h5>URL para gerar QRCode:</h5>           
+                <a>https://garcomfacil-beta.herokuapp.com/<spam th:text="${session.idcliente}"></spam>/01</a>             
             </div>
         </div>
-    </div>    
+ 
+    </div>  
     </body>
 </html>
