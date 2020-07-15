@@ -6,10 +6,12 @@
 	<groupId>br.com.epizza</groupId>
 	<artifactId>ePizza</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<packaging>jar</packaging>
 
 	<name>ePizza</name>
 	<description>Easy Pizza</description>
+	
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -52,6 +54,16 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+	        <groupId>com.google.zxing</groupId>
+	        <artifactId>core</artifactId>
+	        <version>3.3.0</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.google.zxing</groupId>
+	        <artifactId>javase</artifactId>
+	        <version>3.3.0</version>
+	    </dependency>
 	</dependencies>
 
 	<build>

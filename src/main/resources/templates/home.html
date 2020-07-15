@@ -14,12 +14,40 @@
             	<h3>Bem vindo </h3>           
                 <h4 th:text="${session.emailcliente}"></h4>             
             </div>          
-            <div class="col s12 m12  l4 offset-l4 center">    
+            <form class="col s12 m6 offset-m3 l6 offset-l3 center" action="/qrcode"> 
+            	  <ul class="collapsible">
+				    <li>
+				      <div class="collapsible-header"><i class="large material-icons">line_style</i>Gerar QRCode</div>
+				      <div class="collapsible-body">
+				      	<div class="input-field ">                  
+			                  <i class="material-icons prefix">label</i>
+					          <input id="mesa" type="number"  name="mesa" class="validate" required>
+					          <label for="mesa">Insira o número da mesa</label>
+					           
+			            </div>
+			            <input class="waves-effect waves-light btn" type="submit" value="Gerar" /> 
+						
+				      </div>
+				    </li>
+				    
+				  </ul>
+            	
+	    
+         	</form>
+          <!--   
             	<h5>URL para gerar QRCode:</h5>           
-                <a>https://garcomfacil-beta.herokuapp.com/scan/<spam th:text="${session.idcliente}"></spam>/01</a>             
-            </div>
-        </div>
- 
+                <a>https://garcomfacil-beta.herokuapp.com/scan/<spam th:text="${session.idcliente}"></spam>/01</a>     
+                <img class="materialboxed" width="350" th:src="'/img/' + ${session.idcliente} + '.png'" >  
+                --> 
+             <!--       
+			<h1>Upload new Photo</h1>
+			<form method="POST" action="/photos/add" enctype="multipart/form-data">
+			    Title:<input type="text" name="title" />
+			    Image:<input type="file" name="image" accept="image/*" />
+			    <input type="submit" value="Upload" />
+			</form>
+			-->
+ 		</div>
     </div>  
     </body>
 </html>

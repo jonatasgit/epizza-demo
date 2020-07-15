@@ -17,7 +17,6 @@ public class ClienteController {
 	
 	@Autowired
 	private ClienteRepository clienteRepo;
-
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(Model model) {				
@@ -69,6 +68,7 @@ public class ClienteController {
 	public String home(Model model) {				
 		return "./home";
 	}
+	
 	
 	private Cliente login(String email, String senha) {
 		try {			

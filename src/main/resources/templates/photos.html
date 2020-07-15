@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html lang="pt"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="default">
+    <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Imagem</title>
+    </head>
+    <body>
+    <div class="container-fluid center">
+        <div layout:fragment="content" class="row">
+        	 <div class="col col s12 m6 offset-m3 l6 offset-l3 center">
+			    <h3> <span th:text="${title}"></span></h3>
+			    <h5>Clique na imagem abaixo para fazer o Download</h5>
+			     <a th:download="${title}+'.jpg'" th:href="*{'data:image/png;base64,'+image}">
+			    	<img alt="sample" th:src="*{'data:image/png;base64,'+image}" />
+			    </a>
+		    </div>
+		</div>
+    </div>  
+    </body>
+</html>
