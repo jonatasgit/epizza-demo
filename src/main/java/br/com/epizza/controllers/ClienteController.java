@@ -65,7 +65,12 @@ public class ClienteController {
 	}
 	
 	@RequestMapping(value="/home", method=RequestMethod.GET)
-	public String home(Model model) {				
+	public String home(Model model, HttpSession session) {	
+		Cliente clienteLogado = (Cliente) session.getAttribute("cliente");
+		if(clienteLogado == null) {
+			return "redirect:/login";
+		}
+		
 		return "./home";
 	}
 	
